@@ -102,8 +102,8 @@
 }
 
 @theme inline {
-  --font-sans: 'Geist', 'Geist Fallback';
-  --font-mono: 'Geist Mono', 'Geist Mono Fallback';
+  --font-sans: var(--font-lato), ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -337,12 +337,12 @@
   background-color: var(--film-media-bg, #0a0704);
 }
 
-/* CV / mi-historia: softer scrim over home photo on tall story block */
-.mi-historia-story-scrim {
+/* CV / historia (Home): softer scrim over home photo on tall story block */
+.historia-story-scrim {
   pointer-events: none;
 }
 
-[data-theme="dark"] .mi-historia-story-scrim {
+[data-theme="dark"] .historia-story-scrim {
   background: linear-gradient(
     to bottom,
     transparent 0%,
@@ -351,7 +351,7 @@
   );
 }
 
-[data-theme="light"] .mi-historia-story-scrim {
+[data-theme="light"] .historia-story-scrim {
   background: linear-gradient(
     to bottom,
     transparent 0%,
@@ -360,8 +360,8 @@
   );
 }
 
-/* CV: fade story zone into CTA solid bg (#07080f dark / #fafbfc light) */
-.hero-bottom-fade--mi-historia {
+/* CV / historia (Home): fade story zone into next section bg (#07080f dark / #fafbfc light) */
+.hero-bottom-fade--historia {
   height: min(22vh, 240px);
   background: linear-gradient(
     to bottom,
@@ -371,6 +371,18 @@
     color-mix(in srgb, var(--hero-fade-color, #07080f) 94%, transparent) 88%,
     var(--hero-fade-color, #07080f) 100%
   );
+}
+
+/* Historia (Home): ease the photo in from the hero's solid fade-out above it, avoids a hard seam */
+.hero-top-fade--historia {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: min(16vh, 160px);
+  pointer-events: none;
+  z-index: 1;
+  background: linear-gradient(to bottom, var(--hero-fade-color, #07080f), transparent);
 }
 
 /* Growth: taller fade into route bg (#060d04 dark / #fafdfb light) */

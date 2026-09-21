@@ -6,6 +6,7 @@ import { useEffect, useState, type CSSProperties } from "react";
 import { GlowButton, ArrowRightIcon } from "@/components/shared/glow-button";
 import { CTASection } from "@/components/cta-buttons";
 import { ThemeImageBackground } from "@/components/home/theme-image-background";
+import { HistoriaSection } from "@/components/home/historia-section";
 import { THEMES } from "@/lib/design-tokens";
 
 export default function HomePage() {
@@ -76,7 +77,7 @@ export default function HomePage() {
               className="w-2 h-2 rounded-full animate-pulse"
               style={{ background: dark ? "#4ade80" : "#16a34a" }}
             />
-            Bogota, Colombia
+            Bogotá, Colombia
           </div>
 
           {/* Name */}
@@ -120,9 +121,10 @@ export default function HomePage() {
               color: t.text.secondary,
             }}
           >
-            No soy una agencia ni un consultor de PowerPoints. Soy el que entra, entiende
-            cómo funciona tu negocio, y construye contigo lo que necesitas para crecer: marca,
-            contenido, pauta y cultura tech.
+            Desde el año 2019, a raíz de la pandemia, he logrado desarrollar un perfil
+            multidisciplinario que le puede aportar demasiado valor a tu estrategia empresarial.
+            La perspectiva 360 que tengo en los modelos de negocio me convierte en un aliado
+            estratégico de CEOs & equipos fundadores en su proceso de expansión digital y tecnológico.
           </p>
 
           {/* CTA buttons */}
@@ -137,7 +139,7 @@ export default function HomePage() {
               Conoce lo que hago
             </GlowButton>
             <GlowButton
-              href="/mi-historia"
+              href="#historia"
               variant="secondary"
               accentColor={t.accent}
               secondaryColor={t.secondary}
@@ -160,6 +162,9 @@ export default function HomePage() {
             />
           </div>
         </section>
+
+      {/* Historia / CV */}
+      <HistoriaSection dark={dark} t={t} />
 
       {/* Services cards */}
       <section id="disciplinas" className="relative">
@@ -265,8 +270,8 @@ export default function HomePage() {
             dark={dark}
             accentColor={t.accent}
             accentSolidColor={t.accentSolid}
-            title="Listo para empezar?"
-            description="Agenda una llamada para conocer tu proyecto o escribeme directamente por WhatsApp."
+            title="¿Listo para empezar?"
+            description="Agenda una llamada para conocer tu proyecto o escríbeme directamente por WhatsApp."
           />
         </div>
       </section>
