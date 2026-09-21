@@ -10,7 +10,7 @@ export const FILM_MEDIA = {
     position: "center right",
   },
   procesoEditor: {
-    src: "/filmmaker/foto-proceso-produccion-2.png",
+    src: "/filmmaker/foto-proceso-produccion-2.webp",
     position: "center",
   },
 } as const;
