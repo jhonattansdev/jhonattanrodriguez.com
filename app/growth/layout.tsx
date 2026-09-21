@@ -3,21 +3,21 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Growth Hacker | Jhonattan Rodriguez",
   description:
-    "Aprende a dominar Meta Ads, construir tu marca y operar tus redes sociales con sistemas agiles. Entrenamientos y mentorias 1:1 en Bogota y remoto.",
+    "Aprende a dominar Meta Ads, construir tu marca y operar tus redes sociales con sistemas ágiles. Entrenamientos y mentorías 1:1 en Bogotá y remoto.",
   keywords: [
     "Growth Hacking",
     "Meta Ads",
     "Facebook Ads",
     "Instagram Ads",
     "Marketing Digital",
-    "Mentoria",
-    "Bogota",
+    "Mentoría",
+    "Bogotá",
     "Colombia",
   ],
   openGraph: {
     title: "Growth Hacker | Jhonattan Rodriguez",
     description:
-      "Aprende a dominar Meta Ads y operar tu marca con sistemas agiles. Entrenamientos y mentorias 1:1.",
+      "Aprende a dominar Meta Ads y operar tu marca con sistemas ágiles. Entrenamientos y mentorías 1:1.",
     type: "website",
     locale: "es_CO",
   },
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Growth Hacker | Jhonattan Rodriguez",
     description:
-      "Aprende a dominar Meta Ads y operar tu marca con sistemas agiles. Entrenamientos y mentorias 1:1.",
+      "Aprende a dominar Meta Ads y operar tu marca con sistemas ágiles. Entrenamientos y mentorías 1:1.",
   },
 };
 

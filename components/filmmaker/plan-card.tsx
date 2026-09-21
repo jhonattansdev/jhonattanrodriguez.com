@@ -114,19 +114,6 @@ export function PlanCard({
         </ul>
       )}
 
-      {"isCustom" in plan && plan.isCustom && plan.description && (
-        <p
-          className="text-sm leading-relaxed mb-6"
-          style={{
-            fontFamily: "var(--font-lato), sans-serif",
-            color: surface.body,
-            lineHeight: 1.65,
-          }}
-        >
-          {plan.description}
-        </p>
-      )}
-
       <CTACalendar
         variant={surface.ctaVariant}
         dark={surface.ctaDark}
@@ -177,7 +164,7 @@ export function PlanCard({
         aria-labelledby={`plan-${plan.id}-title`}
         hidden={!isOpen}
       >
-        {isOpen && !("isCustom" in plan && plan.isCustom) && (
+        {isOpen && (
           <div
             className="mt-6 pt-6 space-y-6"
             style={{ borderTop: `1px solid ${surface.detailBorder}` }}
@@ -204,59 +191,30 @@ export function PlanCard({
                   {plan.deliverables.map((d, k) => (
                     <div
                       key={k}
-                      className={
-                        "count" in d
-                          ? "min-w-0 p-3 rounded-xl text-center"
-                          : "min-w-0 p-3 rounded-xl text-left col-span-1 min-[400px]:col-span-2"
-                      }
+                      className="min-w-0 p-3 rounded-xl text-center"
                       style={{
                         background: surface.detailPanelBg,
                         border: `1px solid ${surface.detailPanelBorder}`,
                       }}
                     >
-                      {"count" in d ? (
-                        <>
-                          <span
-                            className="text-2xl font-bold block"
-                            style={{
-                              fontFamily: "var(--font-quicksand), sans-serif",
-                              color: surface.detailAccent,
-                            }}
-                          >
-                            {d.count}
-                          </span>
-                          <span
-                            className="text-xs text-pretty"
-                            style={{
-                              fontFamily: "var(--font-lato), sans-serif",
-                              color: surface.detailBody,
-                            }}
-                          >
-                            {d.type}
-                          </span>
-                        </>
-                      ) : (
-                        <>
-                          <span
-                            className="text-sm font-semibold block mb-1"
-                            style={{
-                              fontFamily: "var(--font-quicksand), sans-serif",
-                              color: surface.title,
-                            }}
-                          >
-                            {d.type}
-                          </span>
-                          <span
-                            className="text-xs leading-relaxed block"
-                            style={{
-                              fontFamily: "var(--font-lato), sans-serif",
-                              color: surface.detailBody,
-                            }}
-                          >
-                            {d.desc}
-                          </span>
-                        </>
-                      )}
+                      <span
+                        className="text-2xl font-bold block"
+                        style={{
+                          fontFamily: "var(--font-quicksand), sans-serif",
+                          color: surface.detailAccent,
+                        }}
+                      >
+                        {d.count}
+                      </span>
+                      <span
+                        className="text-xs text-pretty"
+                        style={{
+                          fontFamily: "var(--font-lato), sans-serif",
+                          color: surface.detailBody,
+                        }}
+                      >
+                        {d.type}
+                      </span>
                     </div>
                   ))}
                 </div>
@@ -316,68 +274,6 @@ export function PlanCard({
                   </span>
                 )}
               </div>
-            )}
-          </div>
-        )}
-
-        {isOpen && "isCustom" in plan && plan.isCustom && plan.forWho && (
-          <div
-            className="mt-8 pt-6 space-y-6"
-            style={{ borderTop: `1px solid ${surface.detailBorder}` }}
-          >
-            <DetailSection title="Ideal para" surface={surface}>
-              <ul className="space-y-2">
-                {plan.forWho.map((item, k) => (
-                  <li
-                    key={k}
-                    className="flex items-start gap-3 text-sm"
-                    style={{
-                      fontFamily: "var(--font-lato), sans-serif",
-                      color: surface.detailBody,
-                    }}
-                  >
-                    <span className="mt-0.5 shrink-0" style={{ color: surface.detailAccent }}>
-                      <CheckIcon />
-                    </span>
-                    <span className="text-pretty leading-relaxed">{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </DetailSection>
-            {"deliverables" in plan && plan.deliverables && (
-              <DetailSection title="Entregables" surface={surface}>
-                <div className="space-y-3">
-                  {plan.deliverables.map((d, k) => (
-                    <div
-                      key={k}
-                      className="min-w-0 p-3 rounded-xl"
-                      style={{
-                        background: surface.detailPanelBg,
-                        border: `1px solid ${surface.detailPanelBorder}`,
-                      }}
-                    >
-                      <span
-                        className="text-sm font-medium block mb-1"
-                        style={{
-                          fontFamily: "var(--font-quicksand), sans-serif",
-                          color: surface.title,
-                        }}
-                      >
-                        {d.type}
-                      </span>
-                      <span
-                        className="text-xs leading-relaxed text-pretty block"
-                        style={{
-                          fontFamily: "var(--font-lato), sans-serif",
-                          color: surface.detailBody,
-                        }}
-                      >
-                        {d.desc}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </DetailSection>
             )}
           </div>
         )}

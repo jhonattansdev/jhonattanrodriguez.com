@@ -45,7 +45,7 @@ export default function GrowthPage() {
 
   const dark = theme === "dark";
   const t = dark ? THEMES.growth.dark : THEMES.growth.light;
-  const display = "display" in t ? (t as { display: string }).display : t.accent;
+  const display = t.display;
   const heroBgRgb = dark ? "6, 13, 4" : "250, 253, 251";
 
   const pageTheme = {

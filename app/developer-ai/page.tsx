@@ -1,14 +1,16 @@
 "use client";
 
-import Image from "next/image";
 import { useTheme } from "@teispace/next-themes";
-import { useEffect, useState, type CSSProperties } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { Github } from "lucide-react";
 import { RouteHeroStack } from "@/components/sections/route-hero-stack";
 import { ThemedPageShell } from "@/components/sections/themed-page-shell";
 import { CTACalendar, CTAWhatsApp } from "@/components/cta-buttons";
 import { GlowButton } from "@/components/shared/glow-button";
 import { DeveloperAIPhilosophySection } from "@/components/developer-ai/developer-ai-philosophy-section";
-import { getGitHubProfileLink, getInstagramLink, getInstagramLabel } from "@/lib/cta-links";
+import { ProjectCard } from "@/components/developer-ai/project-card";
+import { ProjectSheet } from "@/components/developer-ai/project-sheet";
+import { getGitHubLabel, getGitHubProfileLink } from "@/lib/cta-links";
 import { DEVELOPER_AI_PHILOSOPHY } from "@/lib/developer-ai-data";
 import { THEMES, BUILDER_STACK, BUILDER_PROJECTS } from "@/lib/design-tokens";
 import {
@@ -23,7 +25,9 @@ const DEV_HERO_H1_USE_ENGAGEMENT = false;
 export default function DeveloperAIPage() {
   const { theme } = useTheme();
   const [mounted, setMounted] = useState(false);
-  const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [sheetOpen, setSheetOpen] = useState(false);
+  const lastTriggerRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -49,7 +53,7 @@ export default function DeveloperAIPage() {
   const devHeroH1Class = DEV_HERO_H1_USE_ENGAGEMENT
     ? "mb-4 text-center leading-none"
     : "font-bold leading-tight mb-4 text-center";
-  const display = "display" in t ? (t as { display: string }).display : t.accent;
+  const display = t.display;
   /** RGB de t.bg: dark #04080f → 4,8,15 | light #fafbff → 250,251,255 */
   const heroBgRgb = dark ? "4, 8, 15" : "250, 251, 255";
   const terminalLabelClass = "inline-block text-sm font-mono mb-4 px-3 py-1.5 rounded-lg";
@@ -138,7 +142,7 @@ export default function DeveloperAIPage() {
           <div className={ROUTE_HERO_INNER}>
           <div className="mb-4 flex justify-center">
             <GlowButton
-              href={getInstagramLink()}
+              href={getGitHubProfileLink()}
               external
               variant="secondary"
               size="md"
@@ -146,22 +150,8 @@ export default function DeveloperAIPage() {
               secondaryColor={t.accent}
             >
               <span className="inline-flex items-center gap-2">
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.8"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  aria-hidden
-                >
-                  <rect x="3" y="3" width="18" height="18" rx="5" />
-                  <circle cx="12" cy="12" r="4" />
-                  <circle cx="17.5" cy="6.5" r="0.5" />
-                </svg>
-                {getInstagramLabel()}
+                <Github className="size-4" strokeWidth={1.8} aria-hidden />
+                {getGitHubLabel()}
               </span>
             </GlowButton>
           </div>
@@ -235,319 +225,33 @@ export default function DeveloperAIPage() {
             </p>
           </div>
 
-          {/* Project Cards: Accordion */}
-          <div className="flex flex-col gap-4">
-            {BUILDER_PROJECTS.map((project, i) => {
-              const isOpen = expandedIndex === i;
-              const titleId = `project-title-${i}`;
-              const panelId = `project-panel-${i}`;
-              const mediaSrc = project.expandedMedia?.src?.trim();
-              const statusColor =
-                project.status === "Activo"
-                  ? t.teal
-                  : project.status === "En construcción"
-                  ? t.accent
-                  : project.status === "En beta"
-                  ? "#f59e0b"
-                  : t.text.muted;
-
-              return (
-                <div
-                  key={project.title}
-                  className="rounded-2xl transition-all duration-300"
-                  style={{
-                    background: isOpen ? t.cardHover : t.card,
-                    border: `1px solid ${isOpen ? `${t.accent}40` : t.border}`,
-                    boxShadow: isOpen ? `0 8px 32px ${t.accent}15` : "none",
-                  }}
-                >
-                  {/* Trigger */}
-                  <button
-                    type="button"
-                    aria-expanded={isOpen}
-                    aria-controls={panelId}
-                    onClick={() => setExpandedIndex(isOpen ? null : i)}
-                    className="w-full text-left p-6 rounded-2xl outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent focus-visible:ring-[color:var(--project-focus)]"
-                    style={{ ["--project-focus" as string]: t.accent }}
-                  >
-                    {/* Badges + toggle */}
-                    <div className="flex items-start justify-between gap-4 mb-3">
-                      <div className="flex flex-wrap gap-2">
-                        <span
-                          className="text-xs font-mono px-2 py-1 rounded-lg"
-                          style={{
-                            color: t.accent,
-                            background: dark ? `${t.accent}15` : `${t.accent}10`,
-                          }}
-                        >
-                          {project.badge}
-                        </span>
-                        <span
-                          className="text-xs font-mono px-2 py-1 rounded-lg"
-                          style={{
-                            color: statusColor,
-                            background: dark ? `${statusColor}20` : `${statusColor}12`,
-                          }}
-                        >
-                          {project.status}
-                        </span>
-                      </div>
-                      <div
-                        className="w-6 h-6 rounded-full flex items-center justify-center transition-transform duration-300 shrink-0"
-                        style={{
-                          background: t.card,
-                          border: `1px solid ${t.border}`,
-                          transform: isOpen ? "rotate(45deg)" : "rotate(0deg)",
-                        }}
-                        aria-hidden
-                      >
-                        <span style={{ color: dark ? "rgba(255,255,255,0.82)" : t.text.secondary, fontSize: 14 }}>+</span>
-                      </div>
-                    </div>
-
-                    {/* Title */}
-                    <h3
-                      id={titleId}
-                      className="font-semibold text-xl mb-2"
-                      style={{ fontFamily: "var(--font-quicksand), 'Quicksand', sans-serif", color: t.text.primary }}
-                    >
-                      {project.title}
-                    </h3>
-
-                    {/* Tagline */}
-                    <p
-                      className="text-sm leading-relaxed mb-4"
-                      style={{ fontFamily: "var(--font-lato), 'Lato', sans-serif", color: t.text.secondary }}
-                    >
-                      {project.tagline}
-                    </p>
-
-                    {/* Role chip */}
-                    <div className="mb-4">
-                      <span
-                        className="text-xs font-mono px-2 py-1 rounded-lg"
-                        style={{
-                          color: t.text.muted,
-                          background: dark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.04)",
-                          border: `1px solid ${t.border}`,
-                        }}
-                      >
-                        {project.role}
-                      </span>
-                    </div>
-
-                    {/* Stack */}
-                    <div className="flex flex-wrap gap-2">
-                      {project.stack.map((s) => (
-                        <span
-                          key={s}
-                          className="text-xs px-2 py-1 rounded-lg font-mono"
-                          style={{
-                            background: dark ? `${t.teal}15` : `${t.teal}10`,
-                            color: t.teal,
-                          }}
-                        >
-                          {s}
-                        </span>
-                      ))}
-                    </div>
-                  </button>
-
-                  {/* Expanded panel */}
-                  <div
-                    id={panelId}
-                    role="region"
-                    aria-labelledby={titleId}
-                    aria-hidden={!isOpen}
-                    className="grid transition-[grid-template-rows] duration-500 ease-out"
-                    style={{ gridTemplateRows: isOpen ? "1fr" : "0fr" }}
-                  >
-                    <div className="min-h-0 overflow-hidden">
-                    <div
-                      className="px-6 pb-6 pt-4"
-                      style={{ borderTop: `1px solid ${t.border}` }}
-                    >
-                      {/* Desc */}
-                      <p
-                        className="text-sm leading-relaxed mb-6"
-                        style={{ fontFamily: "var(--font-lato), 'Lato', sans-serif", color: t.text.secondary }}
-                      >
-                        {project.desc}
-                      </p>
-
-                      {/* Problem */}
-                      <div className="mb-6">
-                        <span
-                          className="text-xs font-mono block mb-2"
-                          style={{ color: t.accent }}
-                        >
-                          {"> problema"}
-                        </span>
-                        <p
-                          className="text-sm leading-relaxed"
-                          style={{ fontFamily: "var(--font-lato), 'Lato', sans-serif", color: t.text.secondary }}
-                        >
-                          {project.problem}
-                        </p>
-                      </div>
-
-                      {/* How */}
-                      <div className="mb-6">
-                        <span
-                          className="text-xs font-mono block mb-3"
-                          style={{ color: t.accent }}
-                        >
-                          {"> cómo funciona"}
-                        </span>
-                        <div className="flex flex-col gap-3">
-                          {project.how.map((h) => (
-                            <div
-                              key={h.label}
-                              className="flex flex-col gap-2 sm:flex-row sm:gap-3 sm:items-start"
-                            >
-                              <span
-                                className="text-xs font-mono px-2 py-1 rounded-lg shrink-0 self-start mt-0.5"
-                                style={{
-                                  color: t.teal,
-                                  background: dark ? `${t.teal}15` : `${t.teal}10`,
-                                }}
-                              >
-                                {h.label}
-                              </span>
-                              <p
-                                className="text-sm leading-relaxed w-full min-w-0 sm:flex-1"
-                                style={{ fontFamily: "var(--font-lato), 'Lato', sans-serif", color: t.text.secondary }}
-                              >
-                                {h.desc}
-                              </p>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* Tech: solo si está poblado */}
-                      {project.tech.length > 0 && (
-                        <div className="mb-6">
-                          <span
-                            className="text-xs font-mono block mb-3"
-                            style={{ color: t.accent }}
-                          >
-                            {"> tecnología aplicada"}
-                          </span>
-                          <div className="flex flex-col gap-3">
-                            {project.tech.map((tech) => (
-                              <div
-                                key={tech.name}
-                                className="flex flex-col gap-2 sm:flex-row sm:gap-3 sm:items-start"
-                              >
-                                <span
-                                  className="text-xs font-mono px-2 py-1 rounded-lg shrink-0 self-start mt-0.5"
-                                  style={{
-                                    color: t.accent,
-                                    background: dark ? `${t.accent}15` : `${t.accent}10`,
-                                  }}
-                                >
-                                  {tech.name}
-                                </span>
-                                <p
-                                  className="text-sm leading-relaxed w-full min-w-0 sm:flex-1"
-                                  style={{ fontFamily: "var(--font-lato), 'Lato', sans-serif", color: t.text.secondary }}
-                                >
-                                  {tech.desc}
-                                </p>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-
-                      {/* Result */}
-                      <div className="mb-6">
-                        <span
-                          className="text-xs font-mono block mb-2"
-                          style={{ color: t.accent }}
-                        >
-                          {"> resultado"}
-                        </span>
-                        <p
-                          className="text-sm leading-relaxed"
-                          style={{ fontFamily: "var(--font-lato), 'Lato', sans-serif", color: t.text.secondary }}
-                        >
-                          {project.result}
-                        </p>
-                      </div>
-
-                      {/* Captura del producto */}
-                      <div className="relative w-full mb-6">
-                        <div
-                          className="w-full overflow-hidden rounded-xl"
-                          style={{ border: `1px solid ${t.border}`, background: t.card }}
-                        >
-                          {mediaSrc ? (
-                            <Image
-                              src={mediaSrc}
-                              alt={project.expandedMedia?.alt ?? ""}
-                              width={project.expandedMedia?.width ?? 1440}
-                              height={project.expandedMedia?.height ?? 900}
-                              sizes="(max-width: 768px) 100vw, 960px"
-                              className="block h-auto w-full"
-                            />
-                          ) : (
-                            <div
-                              className="flex min-h-[200px] items-center justify-center p-4"
-                              aria-hidden
-                            >
-                              <div
-                                className="flex h-full w-full min-h-[168px] items-center justify-center rounded-lg border border-dashed"
-                                style={{ borderColor: `${t.text.muted}55` }}
-                              >
-                                <span
-                                  className="text-xs font-mono"
-                                  style={{ color: dark ? "rgba(255,255,255,0.72)" : t.text.secondary }}
-                                >
-                                  hero screenshot · próximamente
-                                </span>
-                              </div>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-
-                      {/* CTA o nota de cierre */}
-                      {project.closedNote ? (
-                        <p
-                          className="text-sm leading-relaxed italic"
-                          style={{
-                            fontFamily: "var(--font-lato), 'Lato', sans-serif",
-                            color: t.text.muted,
-                          }}
-                        >
-                          {project.closedNote}
-                        </p>
-                      ) : (
-                        project.ctaUrl &&
-                        project.ctaLabel && (
-                          <div className="flex justify-center md:justify-start">
-                            <GlowButton
-                              href={project.ctaUrl}
-                              external
-                              variant="secondary"
-                              size="md"
-                              accentColor={t.accentSolid}
-                              secondaryColor={t.accent}
-                            >
-                              {project.ctaLabel}
-                            </GlowButton>
-                          </div>
-                        )
-                      )}
-                    </div>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
+          {/* Project gallery + detail sheet */}
+          <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+            {BUILDER_PROJECTS.map((project, i) => (
+              <ProjectCard
+                key={project.title}
+                project={project}
+                theme={t}
+                dark={dark}
+                onOpen={(trigger) => {
+                  lastTriggerRef.current = trigger;
+                  setSelectedIndex(i);
+                  setSheetOpen(true);
+                }}
+              />
+            ))}
           </div>
+          <ProjectSheet
+            project={selectedIndex === null ? null : BUILDER_PROJECTS[selectedIndex]}
+            open={sheetOpen}
+            onOpenChange={setSheetOpen}
+            onCloseAutoFocus={(event) => {
+              event.preventDefault();
+              lastTriggerRef.current?.focus();
+            }}
+            theme={t}
+            dark={dark}
+          />
         </div>
       </section>
 

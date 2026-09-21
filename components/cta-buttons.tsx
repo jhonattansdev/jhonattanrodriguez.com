@@ -85,13 +85,13 @@ export function CTASection({
   accentColor,
   accentSolidColor,
   context = "general",
-  title = "Listo para empezar?",
-  description = "Agenda una llamada o escribeme directamente por WhatsApp.",
+  title = "¿Listo para empezar?",
+  description = "Agenda una llamada o escríbeme directamente por WhatsApp.",
   calendarLabel,
   whatsappLabel,
 }: CTASectionProps) {
   const tp = dark ? "rgba(255,255,255,0.88)" : "rgba(0,0,0,0.86)";
-  const ts = dark ? "rgba(255,255,255,0.42)" : "rgba(0,0,0,0.48)";
+  const ts = dark ? "rgba(255,255,255,0.58)" : "rgba(0,0,0,0.6)";
 
   return (
     <div className="text-center py-16">

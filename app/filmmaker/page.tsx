@@ -45,7 +45,7 @@ export default function FilmmakerPage() {
 
   const dark = theme === "dark";
   const t = dark ? THEMES.filmmaker.dark : THEMES.filmmaker.light;
-  const display = "display" in t ? (t as { display: string }).display : t.accent;
+  const display = t.display;
   /** RGB de t.bg: dark #0a0704 | light #fffcfa */
   const heroBgRgb = dark ? "10, 7, 4" : "255, 252, 250";
 

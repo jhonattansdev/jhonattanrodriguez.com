@@ -2,13 +2,18 @@
 // Centralizado para facilitar edicion
 
 export const SOCIAL_PROFILES = {
-  instagram: {
-    url: "https://www.instagram.com/jhonattansdev/",
+  github: {
+    url: "https://github.com/jhonattansdev",
     label: "@jhonattansdev",
   },
+  /** Reservado para la futura sección de coach; hoy solo aparece en el footer. */
+  instagram: {
+    url: "https://www.instagram.com/jhonattansrodriguez/",
+    label: "@jhonattansrodriguez",
+  },
   linkedin: {
-    url: "https://www.linkedin.com/in/jhonattansgrowth/",
-    label: "jhonattansgrowth",
+    url: "https://www.linkedin.com/in/jhonattansrodriguez/",
+    label: "jhonattansrodriguez",
   },
   youtube: {
     url: "https://www.youtube.com/@jhonattansfilm",
@@ -18,7 +23,7 @@ export const SOCIAL_PROFILES = {
 } as const;
 
 export const ROUTE_HERO_SOCIAL = {
-  "developer-ai": SOCIAL_PROFILES.instagram,
+  "developer-ai": SOCIAL_PROFILES.github,
   growth: SOCIAL_PROFILES.linkedin,
   filmmaker: SOCIAL_PROFILES.youtube,
 } as const;
@@ -28,7 +33,7 @@ export const CTA_LINKS = {
   /** Sesión de reconocimiento Growth Hack */
   calendar:
     "https://calendly.com/jhonattanrodriguez/sesion-de-reconocimiento-growth-hack",
-  githubProfile: "https://github.com/Jhonattanrodriguezgrowth",
+  githubProfile: SOCIAL_PROFILES.github.url,
   filmmakerYoutube: SOCIAL_PROFILES.youtube.url,
 };
 
@@ -49,6 +54,10 @@ export function getCalendarLink() {
 
 export function getGitHubProfileLink() {
   return CTA_LINKS.githubProfile;
+}
+
+export function getGitHubLabel() {
+  return SOCIAL_PROFILES.github.label;
 }
 
 export function getInstagramLink() {

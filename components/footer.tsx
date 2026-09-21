@@ -117,7 +117,7 @@ export function Footer() {
         <div className="mt-8 pt-6 border-t text-center" style={{ borderColor: t.border }}>
           <p
             className="text-sm"
-            style={{ fontFamily: "'Lato', sans-serif", color: t.text.muted }}
+            style={{ fontFamily: "'Lato', sans-serif", color: t.text.secondary }}
           >
             {new Date().getFullYear()} Jhonattan Rodriguez - Bogotá, Colombia
           </p>

@@ -3,13 +3,13 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Filmmaker | Jhonattan Rodriguez",
   description:
-    "Produccion de video para founders y marcas. Planes Sprint y Mensual con estrategia, produccion y postproduccion incluida. Desde Bogota para LATAM.",
+    "Producción de video para founders y marcas. Planes Editor, Sprint y Mensual con estrategia, producción y postproducción incluida. Desde Bogotá para LATAM.",
   keywords: [
-    "Produccion de Video",
+    "Producción de Video",
     "Filmmaker",
     "Video Marketing",
     "Contenido para Redes",
-    "Bogota",
+    "Bogotá",
     "Colombia",
     "Video Corporativo",
     "Reels",
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Filmmaker | Jhonattan Rodriguez",
     description:
-      "Produccion de video para founders y marcas. Planes Sprint y Mensual con estrategia incluida.",
+      "Producción de video para founders y marcas. Planes Editor, Sprint y Mensual con estrategia incluida.",
     type: "website",
     locale: "es_CO",
   },
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Filmmaker | Jhonattan Rodriguez",
     description:
-      "Produccion de video para founders y marcas. Planes Sprint y Mensual con estrategia incluida.",
+      "Producción de video para founders y marcas. Planes Editor, Sprint y Mensual con estrategia incluida.",
   },
 };
 

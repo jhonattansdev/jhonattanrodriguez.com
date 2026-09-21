@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Developer AI | Jhonattan Rodríguez",
+  title: "Developer AI | Jhonattan Rodriguez",
   description:
-    "Sistemas integrados con IA para salud: Murphyia, agentes para el paciente y MVPs en semanas. Developer AI enfocado en ecosistemas clínicos, arquitectura y orquestación de herramientas modernas.",
+    "Sistemas integrados con IA para salud: MurphyIA, agentes para pacientes y MVPs en semanas. Developer AI enfocado en ecosistemas clínicos y arquitectura.",
   keywords: [
     "Developer AI",
     "Salud digital",
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     "Colombia",
   ],
   openGraph: {
-    title: "Developer AI | Jhonattan Rodríguez",
+    title: "Developer AI | Jhonattan Rodriguez",
     description:
       "Sistemas integrados con IA para salud, agentes para el paciente y MVPs rápidos. Orquestación con Claude, Cursor, Supabase y Vercel.",
     type: "website",
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Developer AI | Jhonattan Rodríguez",
+    title: "Developer AI | Jhonattan Rodriguez",
     description:
       "Sistemas integrados con IA para salud y MVPs en semanas. Ecosistemas clínicos sin agencias ni equipos enormes.",
   },
