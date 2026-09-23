@@ -14,7 +14,10 @@ type FilmMediaFrameProps = {
   className?: string;
   imageSrc?: string;
   imagePosition?: string;
+  imageFilter?: string;
   videoId?: string;
+  /** Proporción del video/placeholder; por defecto 16:9. */
+  videoAspect?: "16:9" | "9:16";
   children?: ReactNode;
   "aria-hidden"?: boolean;
 };
@@ -23,8 +26,19 @@ const frameStyle = (pageBg: string): CSSProperties => ({
   ["--film-media-bg" as string]: pageBg,
 });
 
-function RatioBox({ children }: { children: ReactNode }) {
-  return <div className="relative w-full pb-[56.25%]">{children}</div>;
+function RatioBox({
+  children,
+  aspect = "16:9",
+}: {
+  children: ReactNode;
+  aspect?: "16:9" | "9:16";
+}) {
+  const paddingBottom = aspect === "9:16" ? "177.78%" : "56.25%";
+  return (
+    <div className="relative w-full" style={{ paddingBottom }}>
+      {children}
+    </div>
+  );
 }
 
 export function FilmMediaFrame({
@@ -34,7 +48,9 @@ export function FilmMediaFrame({
   className = "",
   imageSrc,
   imagePosition = "center",
+  imageFilter,
   videoId,
+  videoAspect = "16:9",
   children,
   "aria-hidden": ariaHidden,
 }: FilmMediaFrameProps) {
@@ -43,7 +59,7 @@ export function FilmMediaFrame({
   if (variant === "video" && videoId) {
     return (
       <div className={baseClass} style={frameStyle(pageBg)}>
-        <RatioBox>
+        <RatioBox aspect={videoAspect}>
           <iframe
             title="Reel destacado: jhonattansfilm"
             src={filmYouTubeEmbedUrl(videoId)}
@@ -80,6 +96,7 @@ export function FilmMediaFrame({
           backgroundImage: `${filmImageOverlay(dark)}, url('${imageSrc}')`,
           backgroundSize: "cover",
           backgroundPosition: imagePosition,
+          filter: imageFilter,
         }}
         aria-hidden={ariaHidden}
       />

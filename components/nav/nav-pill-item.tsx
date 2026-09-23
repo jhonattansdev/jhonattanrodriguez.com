@@ -65,10 +65,20 @@ export function NavPillItem({
   const color = active ? surface.textPrimary : surface.textMuted;
   const ariaLabel = active ? `${item.label}, página actual` : item.label;
 
+  const handleClick = () => {
+    onNavigate?.();
+    // Ya estás en esta sección (mismo href): Next.js no navega ni remonta la
+    // página, así que sin esto tocar el tab activo no hacía nada. Igual que
+    // en una tab bar nativa, debe devolverte al tope de la sección actual.
+    if (active) {
+      window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+    }
+  };
+
   return (
     <Link
       href={item.href}
-      onClick={onNavigate}
+      onClick={handleClick}
       aria-label={ariaLabel}
       aria-current={active ? "page" : undefined}
       className={layoutClasses(layout)}

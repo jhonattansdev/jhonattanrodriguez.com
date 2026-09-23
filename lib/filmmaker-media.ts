@@ -10,7 +10,7 @@ export const FILM_MEDIA = {
     position: "center right",
   },
   procesoEditor: {
-    src: "/filmmaker/foto-proceso-produccion-2.webp",
+    src: "/filmmaker/foto-proceso-edicion.webp",
     position: "center",
   },
 } as const;
@@ -35,3 +35,23 @@ export function filmYouTubeEmbedUrl(videoId: string): string {
   });
   return `https://www.youtube.com/embed/${videoId}?${params}`;
 }
+
+export function filmYouTubeThumbnailUrl(videoId: string): string {
+  return `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
+}
+
+/** Videos reales del portafolio en YouTube, mostrados en el carrusel de /filmmaker */
+export const FILM_PORTFOLIO_VIDEOS: { id: string; title: string }[] = [
+  { id: "XXiIMR0RZtM", title: "Posicionamiento de Marca | Edificios Centro Internacional de Bogotá" },
+  { id: "bIiBEYCBmOI", title: "Viral | Ayudar desde nuestro rol" },
+  { id: "4BinZZhfl20", title: "Video promocional | Expofitness 2025 Group Fit" },
+  { id: "-0CE9m-mgIY", title: "Viral - Aspiracional | Mansión Homes Provento" },
+  { id: "EV1PgdGWDRI", title: "Video Promocional | Daniel Bilbao IA Summit 2025" },
+  { id: "d2JrLwkvV_M", title: "Valor | Abogado sancionado por el uso de IA NextLeap" },
+  { id: "gzSJd4KAGpk", title: "Valor | NXLP | Doctor Carlos Conde | Contenido Jurídico" },
+  { id: "DTDO5v55HG8", title: "Testimonial | Comunidad de Gladwell en el Moneycon" },
+  { id: "lulj24uJGLI", title: "Viral | Comprar apartamento antes o después de las elecciones en Colombia" },
+  { id: "1I4UK7jqb_Q", title: "Posicionamiento de marca | Más de 100 builders construyendo juntos con IA" },
+  { id: "0kJebs8-HqY", title: "Testimonial | Terapia Organizacional Gladwell" },
+  { id: "N-Q8anuBdjM", title: "Video promocional Apartaestudio en Clubhouse" },
+];

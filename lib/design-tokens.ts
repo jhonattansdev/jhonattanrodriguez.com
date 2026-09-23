@@ -109,58 +109,20 @@ export const TIMELINE = [
 ];
 
 // ─── FILMMAKER DATA (Real) ────────────────────────────────────────────────────
-/** Opcional: ID de video YouTube para embed en sección Reel (ej. dQw4w9WgXcQ) */
-/** https://youtu.be/VBgeWLdwaVw: reel destacado en /filmmaker */
-export const FILM_FEATURED_VIDEO_ID = "VBgeWLdwaVw";
-
-export const FILM_REEL = {
-  kicker: "Crear contenido es un proceso",
-  title: "No es solo grabar, es entender lo que se está haciendo.",
+export const FILM_PORTFOLIO_INTRO = {
+  kicker: "Portafolio",
+  title: "Trabajo como Filmmaker",
 } as const;
-
-export const FILM_SERVICE_PILLARS = [
-  {
-    title: "Producción en set",
-    desc: "Sesiones intensivas con dirección creativa, múltiples ángulos y captura optimizada para redes.",
-  },
-  {
-    title: "Postproducción",
-    desc: "Edición, color, sonido, motion graphics y subtítulos listos para publicar.",
-  },
-  {
-    title: "Estrategia de reels",
-    desc: "Framework Valor, Ventas y Blockbuster: cada pieza cumple un objetivo antes de grabar.",
-  },
-  {
-    title: "Entrega y publicación",
-    desc: "Archivos en Drive de tu marca, copy sugerido y calendario de publicación recomendado.",
-  },
-];
 
 export const FILM_PLANS_INTRO =
   "Producción con equipo ágil especializado en video corto para redes: Reels, TikTok y YouTube Shorts.";
-
-export const FILM_TARGET_AUDIENCE = [
-  {
-    title: "Emprendedores de alto ticket",
-    desc: "Buscan diferenciarse de la competencia en calidad de contenido y posicionamiento en redes sociales, y consideran que necesitan un equipo pero no quieren asumir toda la inversión.",
-  },
-  {
-    title: "Startups y PyMEs con pauta en Meta",
-    desc: "Ejecutan o planean ejecutar campañas publicitarias en Meta Ads y requieren contenido de pauta para mantener actualizada a la audiencia.",
-  },
-  {
-    title: "Departamentos de universidades",
-    desc: "Buscan publicitar sus cursos y actividades en redes sociales de forma orgánica o de pago.",
-  },
-];
 
 export const FILM_PLANS = [
   {
     id: "editor",
     name: "Plan Editor",
     tagline: "Framework propio para convertir tu material grabado en contenido de alto valor, listo para publicar.",
-    price: "$100.000 COP por video",
+    price: "$100.000 COP",
     featured: false,
     production: "Entrega en 3–5 días hábiles por video",
     includes: [
@@ -207,37 +169,21 @@ export const FILM_PLANS = [
     ],
   },
   {
-    id: "mensual",
-    name: "Plan Mensual",
-    tagline: "Tres sesiones. Tres locaciones. Presencia activa todo el mes.",
-    price: "$2.520.000 COP",
+    id: "capcut",
+    name: "Entrenamiento CapCut Pro",
+    tagline: "4 sesiones 1:1 para aprender mi framework de edición en CapCut Pro y sacarle calidad profesional a tu material.",
+    price: "$500.000 COP",
     featured: false,
-    production: "3 días de producción (3 horas cada sesión)",
+    production: "4 sesiones 1:1 por videollamada",
     includes: [
-      "3 días de producción al mes en locaciones distintas",
-      "Cada día entrega: 1 Valor + 1 Ventas + 1 Blockbuster",
-      "1 sesión fotográfica profesional por día",
-      "Setup propio y edición independiente por sesión",
-      "Entrega progresiva semana a semana",
+      "Principios básicos de edición y ritmo narrativo en CapCut Pro",
+      "Identificación de procesos de edición con mi framework, para contenido con calidad garantizada",
+      "Análisis de tu material para definir el mínimo necesario en una producción de calidad",
+      "Enfocado en que tu contenido se adelante al 90 % de la competencia en internet",
     ],
-    postproduction: [
-      "Edición profesional de 9 reels totales",
-      "Color grading y diseño sonoro por sesión",
-      "Motion graphics, subtítulos y elementos gráficos",
-      "Optimización para todas las plataformas",
-      "Entrega en carpeta de Drive propia de la marca",
-    ],
-    deliverables: [
-      { type: "Piezas de Valor", count: 3 },
-      { type: "Piezas de Ventas", count: 3 },
-      { type: "Piezas Blockbuster", count: 3 },
-      { type: "Sesiones fotográficas", count: 3 },
-    ],
-    costPerPiece: "$280.000 COP por pieza de video",
-    payment: [
-      { stage: "Al confirmar", amount: "$840.000 COP", desc: "Asegura tus 3 fechas de producción" },
-      { stage: "Contra entrega", amount: "$1.680.000 COP", desc: "Pagas al recibir todo el contenido del mes" },
-    ],
+    costPerPiece: "Nos sentamos 1:1 por videollamada a analizar tu material y tu forma de grabar, identificando el mínimo necesario para que tu producción salga con calidad profesional aplicando mi framework de edición.",
+    savings: "Incluye plantilla/proyecto de CapCut para que apliques el framework en tus propias ediciones.",
+    addon: "Soporte por WhatsApp durante el entrenamiento. Sesión de refuerzo individual: $150.000 COP c/u.",
   },
 ];
 
@@ -256,9 +202,9 @@ export const FILM_PROCESS = [
     step: "02",
     title: "Producción",
     items: [
-      "Setup tecnico y pruebas",
+      "Setup técnico y pruebas",
       "Grabación secuencial de todas las piezas",
-      "Supervision de calidad en tiempo real",
+      "Supervisión de calidad en tiempo real",
       "Captura de material adicional y B-roll",
     ],
   },
@@ -266,7 +212,7 @@ export const FILM_PROCESS = [
     step: "03",
     title: "Post-producción",
     items: [
-      "Seleccion y organizacion del material",
+      "Selección y organización del material",
       "Edición, corrección de color y diseño sonoro",
       "Revisión interna de calidad",
       "Entrega de piezas finales",
@@ -298,15 +244,15 @@ export const FILM_WHY_WORKS = [
     desc: "Concentrar la producción en sesiones intensivas no es un truco de eficiencia: es respeto por tu tiempo y tu presupuesto.",
   },
   {
-    title: "El video ya gano",
+    title: "El video ya ganó",
     desc: "El 80 % del consumo de contenido en redes sociales es video. No es una tendencia: es el estándar. El formato vertical es donde se gana.",
   },
 ];
 
 export const FILM_RESULTS = [
-  { metric: "Autoridad", desc: "Posicionamiento como referente en tu nicho" },
-  { metric: "Conversion", desc: "Pipeline constante de leads calificados" },
-  { metric: "Eficiencia", desc: "Ahorro de tiempo con producción ágil" },
+  { metric: "Autoridad" },
+  { metric: "Conversión" },
+  { metric: "Eficiencia" },
 ];
 
 // ─── GROWTH STACK (hero) ──────────────────────────────────────────────────────

@@ -1,27 +1,22 @@
 "use client";
 
 import { useTheme } from "@teispace/next-themes";
-import { useEffect, useState, type CSSProperties } from "react";
+import { useEffect, useLayoutEffect, useState, type CSSProperties } from "react";
 import { RouteHeroStack } from "@/components/sections/route-hero-stack";
 import { ThemedPageShell } from "@/components/sections/themed-page-shell";
 import { GlowButton } from "@/components/shared/glow-button";
 import { FilmMediaFrame } from "@/components/filmmaker/film-media-frame";
-import { PlanCard } from "@/components/filmmaker/plan-card";
+import { NumberedList } from "@/components/filmmaker/numbered-list";
+import { FilmPlansSection } from "@/components/filmmaker/plans-section";
+import { VideoPortfolioCarousel } from "@/components/filmmaker/video-portfolio-carousel";
 import { FILM_MEDIA } from "@/lib/filmmaker-media";
-import { CTASection, CTACalendar, CTAWhatsApp } from "@/components/cta-buttons";
-import { getYouTubeLink, getYouTubeLabel, getYouTubeLabelAt } from "@/lib/cta-links";
-import { getPlanSurface } from "@/lib/filmmaker-plan-surface";
+import { CTASection, CTAWhatsApp } from "@/components/cta-buttons";
+import { getYouTubeLink, getYouTubeLabel } from "@/lib/cta-links";
 import {
   THEMES,
-  FILM_TARGET_AUDIENCE,
-  FILM_PLANS,
-  FILM_PLANS_INTRO,
   FILM_PROCESS,
   FILM_WHY_WORKS,
   FILM_RESULTS,
-  FILM_SERVICE_PILLARS,
-  FILM_FEATURED_VIDEO_ID,
-  FILM_REEL,
   FILM_STACK,
 } from "@/lib/design-tokens";
 import {
@@ -33,11 +28,30 @@ import {
 export default function FilmmakerPage() {
   const { theme } = useTheme();
   const [mounted, setMounted] = useState(false);
-  const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
+
+  useLayoutEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  }, []);
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  // El contenido real (incluido `id="planes"`) recién existe en el DOM cuando
+  // `mounted` pasa a true. Si la URL llegó con #planes (p. ej. tras recargar
+  // después de tocar "Ver planes"), el navegador puede saltar al ancla justo
+  // en ese momento; se corrige de inmediato en el mismo ciclo de pintado.
+  // (No se toca `history.scrollRestoration`: es un estado global del navegador
+  // para toda la sesión de historial, no de esta página — fijarlo en "manual"
+  // rompía el scroll-to-top nativo de Next.js en otras navegaciones y la
+  // restauración de scroll con el botón "atrás" en cualquier ruta.)
+  useLayoutEffect(() => {
+    if (!mounted) return;
+    if (window.location.hash) {
+      window.history.replaceState(null, "", window.location.pathname + window.location.search);
+    }
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  }, [mounted]);
 
   if (!mounted) {
     return <div className="min-h-screen" style={{ background: THEMES.filmmaker.dark.bg }} />;
@@ -190,12 +204,15 @@ export default function FilmmakerPage() {
             de la metodología.
           </p>
           <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 justify-center items-center">
-            <CTACalendar
+            <GlowButton
+              href="#portafolio"
               variant="primary"
-              dark={dark}
-              accentColor={t.accent}
-              accentSolidColor={t.accentSolid}
-            />
+              size="md"
+              accentColor={t.accentSolid}
+              secondaryColor={t.accent}
+            >
+              Ver portafolio
+            </GlowButton>
             <CTAWhatsApp variant="secondary" context="filmmaker" dark={dark} accentColor={t.accent} />
             <GlowButton
               href="#planes"
@@ -261,9 +278,20 @@ export default function FilmmakerPage() {
         </div>
       </section>
 
+      {/* ─── PLANES ───────────────────────────────────────────────────────────── */}
+      <FilmPlansSection
+        dark={dark}
+        tp={tp}
+        ts={ts}
+        display={display}
+        accent={t.accent}
+        border={t.border}
+        planTheme={planTheme}
+      />
+
       {/* ─── PROCESO ──────────────────────────────────────────────────────────── */}
       <section className="py-16 sm:py-24 relative" style={{ borderTop: `1px solid ${t.border}` }}>
-        <div className="max-w-5xl mx-auto px-6">
+        <div className="max-w-5xl mx-auto px-6 text-center">
           <span
             className="film-display-kicker font-medium block mb-3"
             style={{ fontFamily: "var(--font-lato), sans-serif", color: display }}
@@ -285,239 +313,51 @@ export default function FilmmakerPage() {
               imagePosition={FILM_MEDIA.proceso.position}
               pageBg={t.bg}
               dark={dark}
-              className="min-h-[280px] md:min-h-[320px] w-full h-full"
+              className="min-h-[280px] md:min-h-[320px] w-full h-full order-1"
               aria-hidden
             />
-            <ProcessPhaseList
-              phases={FILM_PROCESS.slice(0, 2)}
+            <NumberedList
+              variant="step"
+              items={FILM_PROCESS.slice(0, 2)}
+              startIndex={0}
               ariaLabelledBy="film-process-heading"
-              tp={tp}
-              ts={ts}
-              gb={gb}
-              ab={ab}
-              accent={t.accent}
+              gridClassName="space-y-6 min-w-0 order-2 md:text-left"
+              theme={{ tp, ts, accent: t.accent, chipBg: gb, chipBorder: ab }}
             />
-            <ProcessPhaseList
-              phases={FILM_PROCESS.slice(2, 4)}
-              ariaLabelledBy="film-process-heading"
-              tp={tp}
-              ts={ts}
-              gb={gb}
-              ab={ab}
-              accent={t.accent}
-            />
+            {/* En mobile, la foto de edición se ubica entre "Producción" y "Post-producción" para acompañar la transición al deslizar; en desktop mantiene su lugar original (abajo a la derecha). */}
             <FilmMediaFrame
               variant="image"
               imageSrc={FILM_MEDIA.procesoEditor.src}
               imagePosition={FILM_MEDIA.procesoEditor.position}
+              imageFilter="grayscale(80%)"
               pageBg={t.bg}
               dark={dark}
-              className="min-h-[280px] md:min-h-[320px] w-full h-full"
+              className="min-h-[280px] md:min-h-[320px] w-full h-full order-3 md:order-4"
               aria-hidden
+            />
+            <NumberedList
+              variant="step"
+              items={FILM_PROCESS.slice(2, 4)}
+              startIndex={2}
+              ariaLabelledBy="film-process-heading"
+              gridClassName="space-y-6 min-w-0 order-4 md:order-3 md:text-left"
+              theme={{ tp, ts, accent: t.accent, chipBg: gb, chipBorder: ab }}
             />
           </div>
         </div>
       </section>
 
-      {/* ─── PLANES ───────────────────────────────────────────────────────────── */}
-      <section
-        id="planes"
-        className="py-16 sm:py-24 relative scroll-mt-28"
-        style={{ borderTop: `1px solid ${t.border}` }}
-      >
-        <div className="max-w-5xl mx-auto px-6">
-          <div className="text-center mb-12 sm:mb-16">
-            <span
-              className="film-display-kicker font-medium block mb-3"
-              style={{ fontFamily: "var(--font-lato), sans-serif", color: display }}
-            >
-              Nuestros planes
-            </span>
-            <h2
-              className="font-semibold text-2xl sm:text-3xl"
-              style={{
-                fontFamily: "var(--font-quicksand), sans-serif",
-                color: tp,
-                letterSpacing: "-0.02em",
-              }}
-            >
-              Elige el plan que se adapta a tu ritmo
-            </h2>
-            <p
-              className="text-base max-w-2xl mx-auto mt-6 leading-relaxed text-pretty"
-              style={{ fontFamily: "var(--font-lato), sans-serif", color: ts, lineHeight: 1.7 }}
-            >
-              {FILM_PLANS_INTRO}
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 items-stretch">
-            {FILM_PLANS.map((plan) => (
-              <PlanCard
-                key={plan.id}
-                plan={plan}
-                surface={getPlanSurface(!!plan.featured, dark, planTheme)}
-                siteDark={dark}
-                accent={t.accent}
-                accentSolid={t.accentSolid}
-                selected={selectedPlan === plan.id}
-                onToggle={() =>
-                  setSelectedPlan(selectedPlan === plan.id ? null : plan.id)
-                }
-              />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ─── QUÉ INCLUYE ────────────────────────────────────────────────────────── */}
-      <section className="py-16 sm:py-20 relative" style={{ borderTop: `1px solid ${t.border}` }}>
-        <div className="max-w-5xl mx-auto px-6 text-center">
-          <span
-            className="film-display-kicker font-medium block mb-3"
-            style={{ fontFamily: "var(--font-lato), sans-serif", color: display }}
-          >
-            Qué incluye
-          </span>
-          <h2
-            className="font-semibold text-2xl sm:text-3xl mb-10 sm:mb-12"
-            style={{ fontFamily: "var(--font-quicksand), sans-serif", color: tp }}
-          >
-            Todo lo que compras con cada plan
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6 text-left">
-            {FILM_SERVICE_PILLARS.map((item, i) => (
-              <div
-                key={i}
-                className="p-5 sm:p-6 rounded-2xl"
-                style={{ background: cardBg, border: `1px solid ${div}` }}
-              >
-                <div
-                  className="w-10 h-10 rounded-xl flex items-center justify-center mb-4 text-sm font-bold"
-                  style={{ background: gb, color: t.accent, border: `1px solid ${ab}` }}
-                >
-                  {String(i + 1).padStart(2, "0")}
-                </div>
-                <h3
-                  className="font-semibold text-base mb-2"
-                  style={{ fontFamily: "var(--font-quicksand), sans-serif", color: tp }}
-                >
-                  {item.title}
-                </h3>
-                <p
-                  className="text-sm leading-relaxed"
-                  style={{ fontFamily: "var(--font-lato), sans-serif", color: ts, lineHeight: 1.65 }}
-                >
-                  {item.desc}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ─── CREAR CONTENIDO (video) ────────────────────────────────────────────── */}
-      <section className="py-16 sm:py-20 relative" style={{ borderTop: `1px solid ${t.border}` }}>
-        <div className="max-w-5xl mx-auto px-6 text-center">
-          <span
-            className="film-display-kicker font-medium block mb-3"
-            style={{ fontFamily: "var(--font-lato), sans-serif", color: display }}
-          >
-            {FILM_REEL.kicker}
-          </span>
-          <h2
-            className="font-semibold text-xl sm:text-2xl md:text-3xl mb-8 max-w-3xl mx-auto text-pretty leading-snug"
-            style={{ fontFamily: "var(--font-quicksand), sans-serif", color: tp }}
-          >
-            {FILM_REEL.title}
-          </h2>
-          <div className="flex w-full justify-center mb-6">
-            {FILM_FEATURED_VIDEO_ID ? (
-              <FilmMediaFrame
-                variant="video"
-                videoId={FILM_FEATURED_VIDEO_ID}
-                pageBg={t.bg}
-                dark={dark}
-                className="max-w-4xl"
-              />
-            ) : (
-              <FilmMediaFrame
-                variant="placeholder"
-                pageBg={t.bg}
-                dark={dark}
-                className="max-w-4xl"
-              >
-                <GlowButton
-                  href={getYouTubeLink()}
-                  external
-                  variant="primary"
-                  size="lg"
-                  accentColor={t.accentSolid}
-                  secondaryColor={t.accent}
-                >
-                  Ver canal en YouTube
-                </GlowButton>
-              </FilmMediaFrame>
-            )}
-          </div>
-          <GlowButton
-            href={getYouTubeLink()}
-            external
-            variant="secondary"
-            size="md"
-            accentColor={t.accentSolid}
-            secondaryColor={t.accent}
-          >
-            {getYouTubeLabelAt()}
-          </GlowButton>
-        </div>
-      </section>
-
-      {/* ─── PARA QUIÉN ES ────────────────────────────────────────────────────── */}
-      <section className="py-16 sm:py-20 relative" style={{ borderTop: `1px solid ${t.border}` }}>
-        <div className="max-w-5xl mx-auto px-6 text-center">
-          <span
-            className="film-display-kicker font-medium block mb-3"
-            style={{ fontFamily: "var(--font-lato), sans-serif", color: display }}
-          >
-            Para quién es
-          </span>
-          <h2
-            className="font-semibold text-2xl sm:text-3xl mb-10 sm:mb-12"
-            style={{ fontFamily: "var(--font-quicksand), sans-serif", color: tp }}
-          >
-            Este servicio está diseñado para
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-6 text-left">
-            {FILM_TARGET_AUDIENCE.map((item, i) => (
-              <div
-                key={i}
-                className="p-5 sm:p-6 rounded-2xl"
-                style={{ background: cardBg, border: `1px solid ${div}` }}
-              >
-                <div
-                  className="w-10 h-10 rounded-xl flex items-center justify-center mb-4 text-lg font-semibold"
-                  style={{ background: gb, color: t.accent, border: `1px solid ${ab}` }}
-                >
-                  {i + 1}
-                </div>
-                <h3
-                  className="font-semibold text-base mb-2"
-                  style={{ fontFamily: "var(--font-quicksand), sans-serif", color: tp }}
-                >
-                  {item.title}
-                </h3>
-                <p
-                  className="text-sm sm:text-base leading-relaxed"
-                  style={{ fontFamily: "var(--font-lato), sans-serif", color: ts, lineHeight: 1.65 }}
-                >
-                  {item.desc}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* ─── PORTAFOLIO (carrusel de videos) ────────────────────────────────────── */}
+      <VideoPortfolioCarousel
+        dark={dark}
+        tp={tp}
+        display={display}
+        accent={t.accent}
+        accentSolid={t.accentSolid}
+        border={t.border}
+        cardBg={cardBg}
+        pageBg={t.bg}
+      />
 
       {/* ─── POR QUE FUNCIONA ─────────────────────────────────────────────────── */}
       <section className="py-16 sm:py-24 relative" style={{ borderTop: `1px solid ${t.border}` }}>
@@ -535,30 +375,13 @@ export default function FilmmakerPage() {
             Por qué funciona esta metodología
           </h2>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 text-left">
-            {FILM_WHY_WORKS.map((item, i) => (
-              <div key={i} className="border-t pt-6" style={{ borderColor: div }}>
-                <span
-                  className="text-3xl font-bold block mb-4"
-                  style={{ fontFamily: "var(--font-quicksand), sans-serif", color: display }}
-                >
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <h3
-                  className="font-semibold text-base mb-2 uppercase tracking-wide"
-                  style={{ fontFamily: "var(--font-quicksand), sans-serif", color: tp }}
-                >
-                  {item.title}
-                </h3>
-                <p
-                  className="text-sm leading-relaxed"
-                  style={{ fontFamily: "var(--font-lato), sans-serif", color: ts, lineHeight: 1.65 }}
-                >
-                  {item.desc}
-                </p>
-              </div>
-            ))}
-          </div>
+          <NumberedList
+            variant="flat"
+            items={FILM_WHY_WORKS}
+            uppercaseTitle
+            gridClassName="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8"
+            theme={{ tp, ts, accent: t.accent, chipBg: gb, chipBorder: ab, border: div }}
+          />
         </div>
       </section>
 
@@ -623,64 +446,5 @@ export default function FilmmakerPage() {
         </div>
       </section>
     </ThemedPageShell>
-  );
-}
-
-type ProcessPhase = (typeof FILM_PROCESS)[number];
-
-function ProcessPhaseList({
-  phases,
-  ariaLabelledBy,
-  tp,
-  ts,
-  gb,
-  ab,
-  accent,
-}: {
-  phases: ProcessPhase[];
-  ariaLabelledBy: string;
-  tp: string;
-  ts: string;
-  gb: string;
-  ab: string;
-  accent: string;
-}) {
-  return (
-    <ol className="space-y-6 min-w-0" aria-labelledby={ariaLabelledBy}>
-      {phases.map((phase, i) => (
-        <li key={i} className="flex gap-4">
-          <div
-            className="w-10 h-10 shrink-0 rounded-xl flex items-center justify-center font-bold text-sm"
-            style={{
-              fontFamily: "var(--font-quicksand), sans-serif",
-              background: gb,
-              color: accent,
-              border: `1px solid ${ab}`,
-            }}
-          >
-            {phase.step}
-          </div>
-          <div className="min-w-0 flex-1">
-            <h3
-              className="font-semibold text-base mb-2"
-              style={{ fontFamily: "var(--font-quicksand), sans-serif", color: tp }}
-            >
-              {phase.title}
-            </h3>
-            <ul className="space-y-1.5">
-              {phase.items.map((item, j) => (
-                <li
-                  key={j}
-                  className="text-sm leading-relaxed text-pretty"
-                  style={{ fontFamily: "var(--font-lato), sans-serif", color: ts }}
-                >
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </li>
-      ))}
-    </ol>
   );
 }

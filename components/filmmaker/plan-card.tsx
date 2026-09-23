@@ -33,7 +33,7 @@ export function PlanCard({
       className="relative rounded-2xl p-6 sm:p-8 transition-shadow duration-250 flex flex-col"
       style={{
         background: surface.bg,
-        border: surface.border,
+        border: plan.featured ? `2px solid ${accent}` : surface.border,
         boxShadow: plan.featured
           ? siteDark
             ? "0 24px 48px rgba(251,146,60,0.12)"
@@ -180,42 +180,6 @@ export function PlanCard({
                       goal={f.goal}
                       surface={surface}
                     />
-                  ))}
-                </div>
-              </DetailSection>
-            )}
-
-            {"deliverables" in plan && plan.deliverables && (
-              <DetailSection title="Entregables al mes" surface={surface}>
-                <div className="grid grid-cols-1 min-[400px]:grid-cols-2 gap-3">
-                  {plan.deliverables.map((d, k) => (
-                    <div
-                      key={k}
-                      className="min-w-0 p-3 rounded-xl text-center"
-                      style={{
-                        background: surface.detailPanelBg,
-                        border: `1px solid ${surface.detailPanelBorder}`,
-                      }}
-                    >
-                      <span
-                        className="text-2xl font-bold block"
-                        style={{
-                          fontFamily: "var(--font-quicksand), sans-serif",
-                          color: surface.detailAccent,
-                        }}
-                      >
-                        {d.count}
-                      </span>
-                      <span
-                        className="text-xs text-pretty"
-                        style={{
-                          fontFamily: "var(--font-lato), sans-serif",
-                          color: surface.detailBody,
-                        }}
-                      >
-                        {d.type}
-                      </span>
-                    </div>
                   ))}
                 </div>
               </DetailSection>

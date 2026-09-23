@@ -18,7 +18,6 @@ export const SOCIAL_PROFILES = {
   youtube: {
     url: "https://www.youtube.com/@jhonattansfilm",
     label: "jhonattansfilm",
-    labelAt: "@jhonattansfilm",
   },
 } as const;
 
@@ -35,6 +34,7 @@ export const CTA_LINKS = {
     "https://calendly.com/jhonattanrodriguez/sesion-de-reconocimiento-growth-hack",
   githubProfile: SOCIAL_PROFILES.github.url,
   filmmakerYoutube: SOCIAL_PROFILES.youtube.url,
+  filmPortfolioPlaylist: "https://youtube.com/playlist?list=PLB42Yo8sidtE&si=3Sygk1Cn0HwCyMH_",
 };
 
 export const WHATSAPP_MESSAGES = {
@@ -84,10 +84,10 @@ export function getYouTubeLabel() {
   return SOCIAL_PROFILES.youtube.label;
 }
 
-export function getYouTubeLabelAt() {
-  return SOCIAL_PROFILES.youtube.labelAt;
-}
-
 export function getFilmmakerYouTubeLink() {
   return getYouTubeLink();
+}
+
+export function getFilmPortfolioPlaylistLink() {
+  return CTA_LINKS.filmPortfolioPlaylist;
 }
