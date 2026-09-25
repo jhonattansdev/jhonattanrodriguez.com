@@ -13,6 +13,7 @@ import { DeveloperAIPhilosophySection } from "@/components/developer-ai/develope
 import { DeveloperShowcase } from "@/components/developer-ai/developer-showcase";
 import { ProjectCard } from "@/components/developer-ai/project-card";
 import { ProjectSheet } from "@/components/developer-ai/project-sheet";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { getGitHubLabel, getGitHubProfileLink } from "@/lib/cta-links";
 import { DEVELOPER_AI_PHILOSOPHY } from "@/lib/developer-ai-data";
 import { THEMES, BUILDER_STACK, BUILDER_PROJECTS } from "@/lib/design-tokens";
@@ -34,6 +35,8 @@ export default function DeveloperAIPage() {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [sheetOpen, setSheetOpen] = useState(false);
   const lastTriggerRef = useRef<HTMLElement | null>(null);
+  // Bajo `md` la imagen de eventos va antes del portafolio; desde `md`, después.
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     setMounted(true);
@@ -74,6 +77,18 @@ export default function DeveloperAIPage() {
     background: dark ? `${t.accent}22` : `${t.accent}10`,
     border: `1px solid ${t.border}`,
   };
+
+  const showcase = (
+    <DeveloperShowcase
+      theme={{
+        border: t.border,
+        card: t.card,
+        accent: t.accent,
+        accentSolid: t.accentSolid,
+        textSecondary: t.text.secondary,
+      }}
+    />
+  );
 
   const services = [
     {
@@ -180,7 +195,7 @@ export default function DeveloperAIPage() {
               <span className="block">La tecnología</span>
               <span className="block">es lo más</span>
               <span className="block" style={{ color: t.accent }}>
-                Cercano a la magia.
+                cercano a la magia.
               </span>
             </span>
             <span className="hidden md:block">
@@ -196,9 +211,10 @@ export default function DeveloperAIPage() {
             className="text-base md:text-lg max-w-2xl mx-auto leading-relaxed text-pretty mb-6"
             style={{ fontFamily: "var(--font-lato), 'Lato', sans-serif", color: t.text.secondary }}
           >
-            Creo firmemente que el software y la inteligencia artificial pueden transformar la calidad
-            de vida en Colombia y Latinoamérica. Desde 2025, el desarrollo de software se ha
-            democratizado y hoy construir soluciones está al alcance de más personas.
+            El software ajeno es uno de los gastos fijos más altos de una empresa y cada nuevo dato
+            alimenta la plataforma de otro. Hoy construir software es 18 veces más rápido: un sistema
+            a la medida optimiza tus procesos y trabaja con tus datos. En un mes tendrás un MVP
+            funcional.
           </Reveal>
           <Reveal delay={360} className="flex flex-wrap gap-4 justify-center">
             <CTACalendar variant="primary" dark={dark} accentColor={t.accent} accentSolidColor={t.accentSolid} />
@@ -221,6 +237,8 @@ export default function DeveloperAIPage() {
 
         <div className="hero-bottom-fade hero-bottom-fade--developer-ai" aria-hidden />
       </section>
+
+      {isMobile && showcase}
 
       {/* Projects */}
       <section className="py-12 relative" style={{ borderTop: `1px solid ${t.border}` }}>
@@ -271,15 +289,7 @@ export default function DeveloperAIPage() {
         </div>
       </section>
 
-      <DeveloperShowcase
-        theme={{
-          border: t.border,
-          card: t.card,
-          accent: t.accent,
-          accentSolid: t.accentSolid,
-          textSecondary: t.text.secondary,
-        }}
-      />
+      {!isMobile && showcase}
 
       {/* Services */}
       <section className="py-12 relative" style={{ borderTop: `1px solid ${t.border}` }}>

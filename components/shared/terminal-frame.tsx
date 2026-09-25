@@ -35,10 +35,10 @@ export function TerminalFrame({ src, alt, label, width, height, sizes, theme }: 
       }}
     >
       <div
-        className="flex items-center gap-3 px-4 py-2.5"
+        className="flex items-center gap-2 px-3 py-2.5 min-[385px]:gap-3 min-[385px]:px-4"
         style={{ background: theme.card, borderBottom: `1px solid ${theme.border}` }}
       >
-        <span aria-hidden className="flex gap-1.5">
+        <span aria-hidden className="flex gap-1.5 max-[340px]:hidden">
           {["E6", "80", "40"].map((alpha) => (
             <span
               key={alpha}
@@ -47,7 +47,11 @@ export function TerminalFrame({ src, alt, label, width, height, sizes, theme }: 
             />
           ))}
         </span>
-        <span className="text-xs font-mono" style={{ color: theme.textSecondary }}>
+        {/* Sin salto de línea: el tamaño baja con el ancho (12 px desde ~390 px) para que rótulos largos quepan en pantallas angostas. */}
+        <span
+          className="min-w-0 whitespace-nowrap font-mono text-[clamp(10px,3.1vw,12px)] leading-4"
+          style={{ color: theme.textSecondary }}
+        >
           <TypedText text={label} />
         </span>
       </div>

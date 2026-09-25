@@ -10,7 +10,7 @@ export function DeveloperShowcase({ theme }: { theme: TerminalFrameTheme }) {
           <TerminalFrame
             src="/developer-ai/developer-eventos.webp"
             alt="Collage de eventos: desarrollo en vivo, el stand de MurphyIA, el equipo campeón del 24H-Hackathon y una jornada de código"
-            label="> eventos --developer_ai"
+            label="> Entrenamiento como developer ai"
             width={1600}
             height={900}
             sizes="(max-width: 768px) 100vw, 1024px"
