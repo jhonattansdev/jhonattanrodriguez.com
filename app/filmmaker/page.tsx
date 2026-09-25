@@ -20,6 +20,8 @@ import {
   FILM_RESULTS,
   FILM_STACK,
 } from "@/lib/design-tokens";
+import { useNight } from "@/lib/night-mode";
+import { hexToRgbTriplet, withNight } from "@/lib/route-theme";
 import {
   ROUTE_HERO_CONTENT,
   ROUTE_HERO_INNER,
@@ -28,6 +30,7 @@ import {
 
 export default function FilmmakerPage() {
   const { theme } = useTheme();
+  const { night } = useNight();
   const [mounted, setMounted] = useState(false);
 
   useLayoutEffect(() => {
@@ -55,14 +58,32 @@ export default function FilmmakerPage() {
   }, [mounted]);
 
   if (!mounted) {
-    return <div className="min-h-screen" style={{ background: THEMES.filmmaker.dark.bg }} />;
+    return (
+      <div
+        className="min-h-screen"
+        data-route-placeholder="vertical"
+        style={{ background: THEMES.filmmaker.dark.bg }}
+      />
+    );
   }
 
   const dark = theme === "dark";
-  const t = dark ? THEMES.filmmaker.dark : THEMES.filmmaker.light;
+  const t = withNight(dark ? THEMES.filmmaker.dark : THEMES.filmmaker.light, night && dark);
   const display = t.display;
-  /** RGB de t.bg: dark #0a0704 | light #fffcfa */
-  const heroBgRgb = dark ? "10, 7, 4" : "255, 252, 250";
+  /** RGB de t.bg: dark #0a0704 | light #fffcfa | Night #000000 */
+  const heroBgRgb = hexToRgbTriplet(t.bg);
+
+  // Los velos cálidos (marrón) del tono actual pasan a negro neutro en Night.
+  const heroToneOverlay = !dark
+    ? "linear-gradient(160deg, rgba(251,146,60,0.1) 0%, rgba(255,252,250,0.46) 55%, rgba(255,252,250,0.5) 100%)"
+    : night
+      ? "linear-gradient(160deg, rgba(0,0,0,0.28) 0%, rgba(0,0,0,0.44) 45%, rgba(0,0,0,0.5) 100%)"
+      : "linear-gradient(160deg, rgba(50,28,14,0.28) 0%, rgba(20,12,8,0.44) 45%, rgba(10,7,4,0.5) 100%)";
+  const ctaOverlay = !dark
+    ? "linear-gradient(120deg, rgba(251,146,60,0.2), rgba(255,252,250,0.98))"
+    : night
+      ? "linear-gradient(120deg, rgba(0,0,0,0.85), rgba(0,0,0,0.95))"
+      : "linear-gradient(120deg, rgba(40,22,10,0.85), rgba(10,7,4,0.95))";
 
   const tp = t.text.primary;
   const ts = t.text.secondary;
@@ -82,7 +103,7 @@ export default function FilmmakerPage() {
     div,
     ab,
     gb,
-    badgeText: dark ? "#0a0704" : "#ffffff",
+    badgeText: dark ? t.bg : "#ffffff",
   };
 
   return (
@@ -107,9 +128,7 @@ export default function FilmmakerPage() {
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
-            backgroundImage: dark
-              ? "linear-gradient(160deg, rgba(50,28,14,0.28) 0%, rgba(20,12,8,0.44) 45%, rgba(10,7,4,0.5) 100%)"
-              : "linear-gradient(160deg, rgba(251,146,60,0.1) 0%, rgba(255,252,250,0.46) 55%, rgba(255,252,250,0.5) 100%)",
+            backgroundImage: heroToneOverlay,
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
@@ -445,11 +464,7 @@ export default function FilmmakerPage() {
           >
             <div
               className="absolute inset-0 pointer-events-none"
-              style={{
-                background: dark
-                  ? "linear-gradient(120deg, rgba(40,22,10,0.85), rgba(10,7,4,0.95))"
-                  : "linear-gradient(120deg, rgba(251,146,60,0.2), rgba(255,252,250,0.98))",
-              }}
+              style={{ background: ctaOverlay }}
               aria-hidden
             />
             <div className="relative z-10">

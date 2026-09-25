@@ -13,6 +13,8 @@ import { Reveal } from "@/components/shared/reveal";
 import { RouteHeroStack } from "@/components/sections/route-hero-stack";
 import { useGrowthOfferingHash } from "@/hooks/use-growth-offering-hash";
 import { GROWTH_STACK, THEMES } from "@/lib/design-tokens";
+import { useNight } from "@/lib/night-mode";
+import { hexToRgbTriplet, withNight } from "@/lib/route-theme";
 import {
   GROWTH_INITIAL_INNER_EXPANDED,
   GROWTH_OFFERING_ORDER,
@@ -27,6 +29,7 @@ import {
 
 export default function GrowthPage() {
   const { theme } = useTheme();
+  const { night } = useNight();
   const [mounted, setMounted] = useState(false);
   const [selectedOffering, setSelectedOffering] = useState<GrowthOfferingId>(GROWTH_OFFERING_ORDER[0]);
   const [innerExpanded, setInnerExpanded] = useState<GrowthInnerExpanded>(GROWTH_INITIAL_INNER_EXPANDED);
@@ -38,13 +41,20 @@ export default function GrowthPage() {
   useGrowthOfferingHash(setSelectedOffering);
 
   if (!mounted) {
-    return <div className="min-h-screen" style={{ background: THEMES.growth.dark.bg }} />;
+    return (
+      <div
+        className="min-h-screen"
+        data-route-placeholder="vertical"
+        style={{ background: THEMES.growth.dark.bg }}
+      />
+    );
   }
 
   const dark = theme === "dark";
-  const t = dark ? THEMES.growth.dark : THEMES.growth.light;
+  const t = withNight(dark ? THEMES.growth.dark : THEMES.growth.light, night && dark);
   const display = t.display;
-  const heroBgRgb = dark ? "6, 13, 4" : "250, 253, 251";
+  /** RGB de t.bg: dark #060d04 | light #fafdfb | Night #000000 */
+  const heroBgRgb = hexToRgbTriplet(t.bg);
 
   const pageTheme = {
     dark,

@@ -16,6 +16,8 @@ import { ProjectSheet } from "@/components/developer-ai/project-sheet";
 import { getGitHubLabel, getGitHubProfileLink } from "@/lib/cta-links";
 import { DEVELOPER_AI_PHILOSOPHY } from "@/lib/developer-ai-data";
 import { THEMES, BUILDER_STACK, BUILDER_PROJECTS } from "@/lib/design-tokens";
+import { useNight } from "@/lib/night-mode";
+import { hexToRgbTriplet, withNight } from "@/lib/route-theme";
 import {
   ROUTE_HERO_CONTENT,
   ROUTE_HERO_INNER,
@@ -27,6 +29,7 @@ const DEV_HERO_H1_USE_ENGAGEMENT = false;
 
 export default function DeveloperAIPage() {
   const { theme } = useTheme();
+  const { night } = useNight();
   const [mounted, setMounted] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [sheetOpen, setSheetOpen] = useState(false);
@@ -37,11 +40,17 @@ export default function DeveloperAIPage() {
   }, []);
 
   if (!mounted) {
-    return <div className="min-h-screen" style={{ background: THEMES.builder.dark.bg }} />;
+    return (
+      <div
+        className="min-h-screen"
+        data-route-placeholder="vertical"
+        style={{ background: THEMES.builder.dark.bg }}
+      />
+    );
   }
 
   const dark = theme === "dark";
-  const t = dark ? THEMES.builder.dark : THEMES.builder.light;
+  const t = withNight(dark ? THEMES.builder.dark : THEMES.builder.light, night && dark);
   const devHeroH1Style: CSSProperties = DEV_HERO_H1_USE_ENGAGEMENT
     ? {
         fontFamily: "var(--font-engagement), 'Engagement', cursive",
@@ -57,8 +66,8 @@ export default function DeveloperAIPage() {
     ? "mb-4 text-center leading-none"
     : "font-bold leading-tight mb-4 text-center";
   const display = t.display;
-  /** RGB de t.bg: dark #04080f → 4,8,15 | light #fafbff → 250,251,255 */
-  const heroBgRgb = dark ? "4, 8, 15" : "250, 251, 255";
+  /** RGB de t.bg: dark #04080f → 4,8,15 | light #fafbff → 250,251,255 | Night #000000 */
+  const heroBgRgb = hexToRgbTriplet(t.bg);
   const terminalLabelClass = "inline-block text-sm font-mono mb-4 px-3 py-1.5 rounded-lg";
   const terminalLabelStyle = {
     color: dark ? "rgba(255,255,255,0.86)" : t.text.secondary,

@@ -1,5 +1,9 @@
 // ─── DESIGN TOKENS ────────────────────────────────────────────────────────────
 // Modern color palette inspired by Nicepay design - each section keeps its brand color
+
+/** Fondo de las verticales (Growth, Dev, Film) en modo Night. Home no lo usa. */
+export const NIGHT_BG = "#000000";
+
 export const THEMES = {
   index: {
     dark: { 

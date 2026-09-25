@@ -9,7 +9,8 @@ import { Youtube, Instagram, Linkedin, Github } from "lucide-react";
 import { GlowButton } from "./shared/glow-button";
 import { getCalendarLink, getGitHubProfileLink, getInstagramLink, getLinkedInLink, getYouTubeLink } from "@/lib/cta-links";
 import { THEMES } from "@/lib/design-tokens";
-import { glowSecondaryForRoute, resolveRouteThemeId } from "@/lib/route-theme";
+import { useNight } from "@/lib/night-mode";
+import { glowSecondaryForRoute, resolveRouteThemeId, withNight } from "@/lib/route-theme";
 
 const FOOTER_LINKS = [
   { href: "/developer-ai", label: "Developer AI" },
@@ -26,6 +27,7 @@ const SOCIAL_LINKS: { href: string; label: string; Icon: LucideIcon }[] = [
 
 export function Footer() {
   const { theme } = useTheme();
+  const { night } = useNight();
   const pathname = usePathname();
   const [mounted, setMounted] = useState(false);
 
@@ -37,12 +39,15 @@ export function Footer() {
   const dark = mounted ? theme === "dark" : true;
   const routeId = resolveRouteThemeId(pathname);
   const mode = dark ? "dark" : "light";
-  const t = THEMES[routeId][mode];
+  // Home (`index`) no cambia con Night.
+  const t = withNight(THEMES[routeId][mode], night && dark && routeId !== "index");
   const secondaryGlow = glowSecondaryForRoute(routeId, mode);
 
   return (
     <footer
-      className="py-12 relative"
+      // Bajo `md` la barra de pestañas es fija: el margen inferior va aquí, no en
+      // `main`, para que el copyright (lo último de la página) quede por encima.
+      className="relative pt-12 pb-[calc(3rem+var(--mobile-tab-bar-height)+var(--mobile-tab-bar-offset)+env(safe-area-inset-bottom,0px))] md:pb-12"
       style={{
         background: t.bg,
         borderTop: `1px solid ${t.border}`,

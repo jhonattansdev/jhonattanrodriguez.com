@@ -30,7 +30,7 @@ function NavIcon({
 function layoutClasses(layout: NavPillLayout): string {
   switch (layout) {
     case "tab":
-      return "flex flex-1 flex-col items-center justify-center gap-0.5 py-1.5 min-h-[48px] min-w-0 rounded-lg transition-all duration-200 ease-out focus-visible:outline-none focus-visible:ring-2";
+      return "flex flex-1 flex-col items-center justify-center gap-0.5 rounded-full py-2 min-h-[52px] min-w-0 transition-all duration-200 ease-out active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent";
     case "row":
       return "flex flex-row items-center gap-3 rounded-xl px-4 py-3 min-h-[48px] w-full transition-all duration-200 ease-out focus-visible:outline-none focus-visible:ring-2";
     default:
@@ -39,7 +39,7 @@ function layoutClasses(layout: NavPillLayout): string {
 }
 
 function iconSizeForLayout(layout: NavPillLayout): number {
-  if (layout === "tab") return 22;
+  if (layout === "tab") return 20;
   if (layout === "row") return 20;
   return 18;
 }

@@ -7,6 +7,7 @@ import {
   filmPlaceholderBackground,
   filmYouTubeEmbedUrl,
 } from "@/lib/filmmaker-media";
+import { useNight } from "@/lib/night-mode";
 
 type FilmMediaFrameProps = {
   variant: "image" | "video" | "placeholder";
@@ -58,6 +59,7 @@ export function FilmMediaFrame({
   reveal = false,
   "aria-hidden": ariaHidden,
 }: FilmMediaFrameProps) {
+  const { night } = useNight();
   const baseClass = `film-media-frame w-full ${className}`.trim();
 
   if (variant === "video" && videoId) {
@@ -82,7 +84,7 @@ export function FilmMediaFrame({
         <RatioBox>
           <div
             className="absolute inset-0 flex items-center justify-center"
-            style={{ background: filmPlaceholderBackground(dark) }}
+            style={{ background: filmPlaceholderBackground(dark, night) }}
           >
             {children}
           </div>

@@ -14,6 +14,7 @@ import {
 } from "@/components/developer-ai/project-ui";
 import { useIsMobile } from "@/hooks/use-mobile";
 import type { BuilderProject } from "@/lib/design-tokens";
+import { useNight } from "@/lib/night-mode";
 
 const FONT_TITLE = "var(--font-quicksand), 'Quicksand', sans-serif";
 const FONT_BODY = "var(--font-lato), 'Lato', sans-serif";
@@ -54,11 +55,12 @@ export function ProjectSheet({
   dark,
 }: ProjectSheetProps) {
   const isMobile = useIsMobile();
+  const { night } = useNight();
 
   if (!project) return null;
 
   const surface = dark ? `color-mix(in srgb, ${t.bg} 92%, ${t.accent} 8%)` : "#ffffff";
-  const overlayBg = dark ? "rgba(2,6,14,0.66)" : "rgba(15,23,42,0.38)";
+  const overlayBg = dark ? (night ? "rgba(0,0,0,0.72)" : "rgba(2,6,14,0.66)") : "rgba(15,23,42,0.38)";
   const shadow = dark ? "0 32px 96px rgba(0,0,0,0.55)" : "0 32px 96px rgba(15,23,42,0.25)";
 
   if (isMobile) {

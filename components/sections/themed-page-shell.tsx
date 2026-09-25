@@ -2,6 +2,7 @@
 
 import type { ReactNode } from "react";
 import { ModernBg } from "@/components/shared/modern-bg";
+import { useNight } from "@/lib/night-mode";
 
 export type ThemedPageShellProps = {
   pageBackground: string;
@@ -11,7 +12,11 @@ export type ThemedPageShellProps = {
   children: ReactNode;
 };
 
-/** Contenedor común de páginas con tema: fondo de página + `ModernBg`. */
+/**
+ * Contenedor común de páginas con tema: fondo de página + `ModernBg`.
+ * En Night (solo oscuro) no se pinta `ModernBg`: sus resplandores de acento
+ * tiñen el fondo y ahí debe quedar negro absoluto.
+ */
 export function ThemedPageShell({
   pageBackground,
   accentColor,
@@ -19,9 +24,13 @@ export function ThemedPageShell({
   dark,
   children,
 }: ThemedPageShellProps) {
+  const { night } = useNight();
+
   return (
     <div className="relative min-h-screen overflow-x-hidden" style={{ background: pageBackground }}>
-      <ModernBg accentColor={accentColor} secondaryColor={secondaryColor} dark={dark} />
+      {!(dark && night) && (
+        <ModernBg accentColor={accentColor} secondaryColor={secondaryColor} dark={dark} />
+      )}
       {children}
     </div>
   );

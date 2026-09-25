@@ -21,10 +21,11 @@ export function filmImageOverlay(dark: boolean): string {
     : `linear-gradient(180deg, rgba(10,7,4,0.08), rgba(10,7,4,0.02))`;
 }
 
-export function filmPlaceholderBackground(dark: boolean): string {
-  return dark
-    ? "linear-gradient(145deg, rgba(40,24,12,0.6), rgba(10,7,4,0.95))"
-    : "linear-gradient(145deg, rgba(251,146,60,0.12), rgba(255,252,250,1))";
+export function filmPlaceholderBackground(dark: boolean, night = false): string {
+  if (!dark) return "linear-gradient(145deg, rgba(251,146,60,0.12), rgba(255,252,250,1))";
+  return night
+    ? "linear-gradient(145deg, rgba(24,24,24,0.6), rgba(0,0,0,0.95))"
+    : "linear-gradient(145deg, rgba(40,24,12,0.6), rgba(10,7,4,0.95))";
 }
 
 export function filmYouTubeEmbedUrl(videoId: string): string {

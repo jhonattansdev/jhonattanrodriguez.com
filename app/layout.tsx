@@ -3,6 +3,7 @@ import { Engagement, Quicksand, Lato } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { ThemeProvider } from "@/components/theme-provider";
 import { LIGHT_MODE_UI_ENABLED } from "@/lib/site-theme";
+import { NIGHT_INIT_SCRIPT } from "@/lib/night-init-script";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import "./globals.css";
@@ -76,6 +77,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" suppressHydrationWarning className="overflow-x-hidden">
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: NIGHT_INIT_SCRIPT }} />
+      </head>
       <body
         className={`${engagement.variable} ${quicksand.variable} ${lato.variable} font-sans antialiased overflow-x-hidden`}
       >
@@ -87,9 +91,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Navbar />
-          <main className="pb-[calc(var(--mobile-tab-bar-height)+env(safe-area-inset-bottom,0px))] md:pb-0">
-            {children}
-          </main>
+          <main>{children}</main>
           <Footer />
         </ThemeProvider>
         {process.env.NODE_ENV === "production" && <Analytics />}

@@ -6,6 +6,7 @@ import type { ElementType } from "react";
 import { Drawer as DrawerPrimitive } from "vaul";
 import { FilmMediaFrame } from "@/components/filmmaker/film-media-frame";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useNight } from "@/lib/night-mode";
 
 const FONT_TITLE = "var(--font-quicksand), 'Quicksand', sans-serif";
 
@@ -29,10 +30,11 @@ export function VideoLightbox({
   accent,
 }: VideoLightboxProps) {
   const isMobile = useIsMobile();
+  const { night } = useNight();
   const open = videoId !== null;
 
   const surface = dark ? `color-mix(in srgb, ${pageBg} 92%, ${accent} 8%)` : "#ffffff";
-  const overlayBg = dark ? "rgba(2,6,14,0.66)" : "rgba(15,23,42,0.38)";
+  const overlayBg = dark ? (night ? "rgba(0,0,0,0.72)" : "rgba(2,6,14,0.66)") : "rgba(15,23,42,0.38)";
   const shadow = dark ? "0 32px 96px rgba(0,0,0,0.55)" : "0 32px 96px rgba(15,23,42,0.25)";
 
   function renderBody(Close: ElementType) {

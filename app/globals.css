@@ -4,7 +4,9 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --mobile-tab-bar-height: 3.75rem;
+  /* Píldora flotante: alto (52 px de item + 8 px de relleno + 2 px de borde) y separación del borde inferior */
+  --mobile-tab-bar-height: 3.875rem;
+  --mobile-tab-bar-offset: 0.75rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -318,7 +320,6 @@
 .mobile-tab-bar {
   -webkit-backdrop-filter: blur(14px);
   backdrop-filter: blur(14px);
-  padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
 /* Filmmaker: contenedores foto/video sin borde visible */
@@ -578,4 +579,18 @@
     opacity: 1;
     transform: none;
   }
+}
+
+/* ─── Night ────────────────────────────────────────────────────────────────────
+   Segundo tono del sitio (lib/night-mode.ts): `<html data-night="true">`.
+   Growth, Dev y Film pintan #000 desde sus tokens (`withNight`); Home no cambia.
+   Sin `@layer` a propósito: debe ganar sobre `body { @apply bg-background }`. */
+html[data-night="true"] body {
+  background-color: #000;
+}
+
+/* Placeholder previo a la hidratación de las verticales: sin esto se vería un
+   destello del negro teñido de cada página antes de pasar a #000. */
+html[data-night="true"] [data-route-placeholder="vertical"] {
+  background: #000 !important;
 }
