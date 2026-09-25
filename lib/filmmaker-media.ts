@@ -6,7 +6,8 @@ export const FILM_MEDIA = {
     position: "center 35%",
   },
   proceso: {
-    src: "/filmmaker/foto-proceso-produccion.jpg",
+    // Negros elevados a nivel 38 (el original tenía fondo 0 y se fundía con la página): equilibra el tono con la captura del editor.
+    src: "/filmmaker/foto-proceso-produccion.webp",
     position: "center right",
   },
   procesoEditor: {
@@ -15,9 +16,10 @@ export const FILM_MEDIA = {
   },
 } as const;
 
+/** Velo sobre las fotos: en oscuro es negro neutro tanto en el tono normal como en Night, para que el color sea el mismo en ambos. */
 export function filmImageOverlay(dark: boolean): string {
   return dark
-    ? `linear-gradient(180deg, rgba(60,36,18,0.17), rgba(10,7,4,0.25))`
+    ? `linear-gradient(180deg, rgba(0,0,0,0.17), rgba(0,0,0,0.25))`
     : `linear-gradient(180deg, rgba(10,7,4,0.08), rgba(10,7,4,0.02))`;
 }
 

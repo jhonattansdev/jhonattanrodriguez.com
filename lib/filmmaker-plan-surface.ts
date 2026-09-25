@@ -1,4 +1,4 @@
-/** Tokens de superficie para tarjetas de plan (mismo tratamiento de color en las 3; la destacada se distingue por borde/badge en plan-card.tsx). */
+/** Tokens de superficie para tarjetas de plan (mismo color y mismo borde de acento en las 3; la destacada se distingue por el badge y el brillo en plan-card.tsx). */
 
 export type PlanSurface = {
   bg: string;
@@ -44,7 +44,7 @@ export function getPlanSurface(theme: SurfaceTheme): PlanSurface {
 
   return {
     bg: cardBg,
-    border: `1px solid ${div}`,
+    border: `2px solid ${accent}`,
     title: tp,
     body: ts,
     price: accent,

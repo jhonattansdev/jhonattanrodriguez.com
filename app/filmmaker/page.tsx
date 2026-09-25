@@ -7,6 +7,7 @@ import { ThemedPageShell } from "@/components/sections/themed-page-shell";
 import { GlowButton } from "@/components/shared/glow-button";
 import { Reveal } from "@/components/shared/reveal";
 import { FilmMediaFrame } from "@/components/filmmaker/film-media-frame";
+import { FilmMethodSection } from "@/components/filmmaker/method-section";
 import { NumberedList } from "@/components/filmmaker/numbered-list";
 import { FilmPlansSection } from "@/components/filmmaker/plans-section";
 import { VideoPortfolioCarousel } from "@/components/filmmaker/video-portfolio-carousel";
@@ -16,7 +17,6 @@ import { getYouTubeLink, getYouTubeLabel } from "@/lib/cta-links";
 import {
   THEMES,
   FILM_PROCESS,
-  FILM_WHY_WORKS,
   FILM_RESULTS,
   FILM_STACK,
 } from "@/lib/design-tokens";
@@ -271,31 +271,11 @@ export default function FilmmakerPage() {
         <div className="hero-bottom-fade hero-bottom-fade--filmmaker" aria-hidden />
       </section>
 
-      {/* ─── PROBLEMA ───────────────────────────────────────────────────────────── */}
-      <section className="py-16 sm:py-20 relative" style={{ borderTop: `1px solid ${t.border}` }}>
-        <div className="max-w-5xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center">
-          <Reveal className="text-center lg:text-left order-2 lg:order-1">
-            <span
-              className="film-display-kicker font-medium block mb-3"
-              style={{ fontFamily: "var(--font-lato), sans-serif", color: display }}
-            >
-              El problema
-            </span>
-            <p
-              className="text-lg sm:text-xl leading-relaxed mb-6"
-              style={{ fontFamily: "var(--font-quicksand), sans-serif", color: tp, fontWeight: 500 }}
-            >
-              Las marcas necesitan presencia constante en redes sociales, pero la producción
-              tradicional es lenta, costosa y fragmentada.
-            </p>
-            <p
-              className="text-base leading-relaxed"
-              style={{ fontFamily: "var(--font-lato), sans-serif", color: ts, lineHeight: 1.7 }}
-            >
-              Cada pieza toma días de planificación, rodaje y edición. La solución: un sistema
-              optimizado que entrega contenido de calidad profesional en tiempo récord.
-            </p>
-          </Reveal>
+      {/* ─── FOTO (solo móvil) ────────────────────────────────────────────────────
+          Se retiró el texto "El problema": junto a la foto podía leerse como un mensaje equivocado.
+          La foto queda solo en móvil (< 768 px) hasta definir su integración. */}
+      <section className="py-16 relative md:hidden" style={{ borderTop: `1px solid ${t.border}` }}>
+        <div className="max-w-5xl mx-auto px-6">
           <FilmMediaFrame
             reveal
             variant="image"
@@ -303,7 +283,7 @@ export default function FilmmakerPage() {
             imagePosition={FILM_MEDIA.problema.position}
             pageBg={t.bg}
             dark={dark}
-            className="order-1 lg:order-2 min-h-[280px] sm:min-h-[360px] w-full"
+            className="min-h-[280px] sm:min-h-[360px] w-full"
             aria-hidden
           />
         </div>
@@ -394,33 +374,17 @@ export default function FilmmakerPage() {
         pageBg={t.bg}
       />
 
-      {/* ─── POR QUE FUNCIONA ─────────────────────────────────────────────────── */}
-      <section className="py-16 sm:py-24 relative" style={{ borderTop: `1px solid ${t.border}` }}>
-        <div className="max-w-5xl mx-auto px-6 text-center">
-          <Reveal>
-            <span
-              className="film-display-kicker font-medium block mb-3"
-              style={{ fontFamily: "var(--font-lato), sans-serif", color: display }}
-            >
-              Metodología
-            </span>
-            <h2
-              className="font-semibold text-2xl sm:text-3xl mb-10 sm:mb-14 max-w-2xl mx-auto"
-              style={{ fontFamily: "var(--font-quicksand), sans-serif", color: tp }}
-            >
-              Por qué funciona esta metodología
-            </h2>
-          </Reveal>
-
-          <NumberedList
-            variant="flat"
-            items={FILM_WHY_WORKS}
-            uppercaseTitle
-            gridClassName="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8"
-            theme={{ tp, ts, accent: t.accent, chipBg: gb, chipBorder: ab, border: div }}
-          />
-        </div>
-      </section>
+      {/* ─── METODOLOGÍA (producción + pauta) ─────────────────────────────────── */}
+      <FilmMethodSection
+        tp={tp}
+        ts={ts}
+        display={display}
+        accent={t.accent}
+        border={t.border}
+        chipBg={gb}
+        chipBorder={ab}
+        cardBg={cardBg}
+      />
 
       {/* ─── RESULTADOS ───────────────────────────────────────────────────────── */}
       <section className="py-16 sm:py-20 relative" style={{ borderTop: `1px solid ${t.border}` }}>

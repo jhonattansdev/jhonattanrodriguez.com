@@ -234,24 +234,33 @@ export const FILM_PROCESS = [
   },
 ];
 
-export const FILM_WHY_WORKS = [
+/** Metodología: producción de video y pauta como un solo sistema (3 pasos). */
+export const FILM_METHOD_STEPS = [
   {
-    title: "Un realizador que opera como equipo",
-    desc: "No hay tres personas coordinando lo que uno puede ejecutar con sistema. Menos fricciones, menos costos, misma calidad.",
+    title: "Producir",
+    highlight: "8 a 12 videos al mes",
+    desc: "Sesiones de rodaje concentradas y un solo realizador que opera como equipo: volumen constante sin coordinar tres proveedores.",
   },
   {
-    title: "Cada pieza tiene un trabajo que hacer",
-    desc: "Antes de encender la cámara ya sabemos qué tiene que lograr cada video: atraer, nutrir o convertir. Estrategia aplicada al set.",
+    title: "Pautar",
+    highlight: "Tu presupuesto de pauta",
+    desc: "La pauta mensual que ya destinas a anuncios se invierte en este material, hecho para pautar y no para llenar el feed.",
   },
   {
-    title: "El tiempo de tu marca vale",
-    desc: "Concentrar la producción en sesiones intensivas no es un truco de eficiencia: es respeto por tu tiempo y tu presupuesto.",
-  },
-  {
-    title: "El video ya ganó",
-    desc: "El 80 % del consumo de contenido en redes sociales es video. No es una tendencia: es el estándar. El formato vertical es donde se gana.",
+    title: "Llegar",
+    highlight: "A quien ya le interesa",
+    desc: "Cada video se lleva a personas interesadas en tu producto o servicio, en lugar de repartir alcance sin dirección.",
   },
 ];
+
+/** Panel de valor de la metodología: la visión estratégica detrás de cada pieza. */
+export const FILM_METHOD_VISION = {
+  title: "Visión estratégica en cada pieza",
+  desc: "Ningún video se graba sin saber qué trabajo va a hacer. La perspectiva de growth define el guion, el formato y el llamado a la acción, para que la inversión en pauta lleve a la persona a una acción concreta.",
+  ctaPrompt: "¿Prefieres correr tú la pauta?",
+  ctaLabel: "Ver el entrenamiento Meta Ads",
+  ctaHref: "/growth#metaads",
+} as const;
 
 export const FILM_RESULTS = [
   { metric: "Autoridad" },

@@ -18,6 +18,29 @@ export type NumberedListTheme = {
   border?: string;
 };
 
+/** Chip con el número del paso en dos dígitos (`n` empieza en 1). */
+export function NumberChip({
+  n,
+  theme: t,
+}: {
+  n: number;
+  theme: Pick<NumberedListTheme, "accent" | "chipBg" | "chipBorder">;
+}) {
+  return (
+    <div
+      className="w-10 h-10 shrink-0 rounded-xl flex items-center justify-center font-bold text-sm"
+      style={{
+        fontFamily: "var(--font-quicksand), sans-serif",
+        background: t.chipBg,
+        color: t.accent,
+        border: `1px solid ${t.chipBorder}`,
+      }}
+    >
+      {String(n).padStart(2, "0")}
+    </div>
+  );
+}
+
 type NumberedListProps = {
   items: NumberedListItem[];
   variant: NumberedListVariant;
@@ -45,19 +68,7 @@ export function NumberedList({
       aria-labelledby={ariaLabelledBy}
     >
       {items.map((item, i) => {
-        const chip = (
-          <div
-            className="w-10 h-10 shrink-0 rounded-xl flex items-center justify-center font-bold text-sm"
-            style={{
-              fontFamily: "var(--font-quicksand), sans-serif",
-              background: t.chipBg,
-              color: t.accent,
-              border: `1px solid ${t.chipBorder}`,
-            }}
-          >
-            {String(startIndex + i + 1).padStart(2, "0")}
-          </div>
-        );
+        const chip = <NumberChip n={startIndex + i + 1} theme={t} />;
 
         const title = (
           <h3

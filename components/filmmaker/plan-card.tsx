@@ -33,7 +33,7 @@ export function PlanCard({
       className="relative rounded-2xl p-6 sm:p-8 transition-shadow duration-250 flex flex-col"
       style={{
         background: surface.bg,
-        border: plan.featured ? `2px solid ${accent}` : surface.border,
+        border: surface.border,
         boxShadow: plan.featured
           ? siteDark
             ? "0 24px 48px rgba(251,146,60,0.12)"
