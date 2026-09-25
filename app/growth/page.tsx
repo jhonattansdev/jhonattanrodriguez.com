@@ -165,18 +165,15 @@ export default function GrowthPage() {
                 color: t.text.primary,
               }}
             >
+              {/* Móvil: dos tramos que se reparten solos (`text-balance`); con saltos fijos "El profesional que domina" no cabe en 360 a 390 px y dejaba "domina" suelto. */}
               <span className="md:hidden">
-                <span className="block">El founder que domina</span>
-                <span className="block">sus propias herramientas</span>
-                <span className="block" style={{ color: t.accent }}>
-                  no necesita permiso
-                </span>
-                <span className="block" style={{ color: t.accent }}>
-                  de nadie para crecer.
+                <span className="block text-balance">El profesional que domina sus propias herramientas</span>
+                <span className="block text-balance" style={{ color: t.accent }}>
+                  no necesita permiso de nadie para crecer.
                 </span>
               </span>
               <span className="hidden md:block">
-                <span className="block">El founder que domina</span>
+                <span className="block">El profesional que domina</span>
                 <span className="block">
                   sus propias herramientas{" "}
                   <span style={{ color: t.accent }}>no necesita</span>
@@ -192,9 +189,10 @@ export default function GrowthPage() {
               className="text-base md:text-lg max-w-2xl mx-auto leading-relaxed mb-6 text-pretty"
               style={{ ...bodyStyle, lineHeight: 1.7 }}
             >
-              Es imposible delegar bien lo que no entiendes. Te entreno en pensamiento sistémico,
-              posicionamiento de marca y metodologías ágiles para que lideres tu operación con estrategia
-              y la cedas cuando quieras, no porque no te quede otra.
+              Te entreno para monetizar tus redes con procesos estratégicos: entender los principios
+              básicos de las redes sociales, optimizar tu presupuesto de campaña mientras escalas y,
+              cuando armes un equipo más robusto, delegar con criterio. Es imposible delegar bien lo
+              que no entiendes.
             </Reveal>
             <Reveal
               delay={360}
@@ -211,7 +209,7 @@ export default function GrowthPage() {
                 context="growth"
                 dark={dark}
                 accentColor={t.accent}
-                label="Hablemos de tu operación"
+                label="Hablemos de tu marca"
               />
               <GlowButton
                 href="#servicios"
