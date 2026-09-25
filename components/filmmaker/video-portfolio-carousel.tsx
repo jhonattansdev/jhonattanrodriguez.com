@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, Play } from "lucide-react";
 import { GlowButton } from "@/components/shared/glow-button";
+import { Reveal } from "@/components/shared/reveal";
 import { VideoLightbox } from "@/components/filmmaker/video-lightbox";
 import { FILM_PORTFOLIO_VIDEOS, filmYouTubeThumbnailUrl } from "@/lib/filmmaker-media";
 import { FILM_PORTFOLIO_INTRO } from "@/lib/design-tokens";
@@ -68,7 +69,7 @@ export function VideoPortfolioCarousel({
       style={{ borderTop: `1px solid ${border}` }}
     >
       <div className="max-w-5xl mx-auto px-6">
-        <div className="text-center mb-12 sm:mb-16">
+        <Reveal className="text-center mb-12 sm:mb-16">
           <span
             className="film-display-kicker font-medium block mb-3"
             style={{ fontFamily: "var(--font-lato), sans-serif", color: display }}
@@ -85,7 +86,7 @@ export function VideoPortfolioCarousel({
           >
             {FILM_PORTFOLIO_INTRO.title}
           </h2>
-        </div>
+        </Reveal>
 
         <div
           ref={trackRef}
@@ -105,7 +106,7 @@ export function VideoPortfolioCarousel({
               >
                 <img
                   src={filmYouTubeThumbnailUrl(video.id)}
-                  alt={video.title}
+                  alt=""
                   loading="lazy"
                   className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                 />

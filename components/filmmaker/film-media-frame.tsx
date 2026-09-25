@@ -1,6 +1,7 @@
 "use client";
 
 import type { CSSProperties, ReactNode } from "react";
+import { Reveal } from "@/components/shared/reveal";
 import {
   filmImageOverlay,
   filmPlaceholderBackground,
@@ -19,6 +20,8 @@ type FilmMediaFrameProps = {
   /** Proporción del video/placeholder; por defecto 16:9. */
   videoAspect?: "16:9" | "9:16";
   children?: ReactNode;
+  /** Entrada al hacer scroll (solo variante `image`). */
+  reveal?: boolean;
   "aria-hidden"?: boolean;
 };
 
@@ -52,6 +55,7 @@ export function FilmMediaFrame({
   videoId,
   videoAspect = "16:9",
   children,
+  reveal = false,
   "aria-hidden": ariaHidden,
 }: FilmMediaFrameProps) {
   const baseClass = `film-media-frame w-full ${className}`.trim();
@@ -88,19 +92,17 @@ export function FilmMediaFrame({
   }
 
   if (variant === "image" && imageSrc) {
-    return (
-      <div
-        className={baseClass}
-        style={{
-          ...frameStyle(pageBg),
-          backgroundImage: `${filmImageOverlay(dark)}, url('${imageSrc}')`,
-          backgroundSize: "cover",
-          backgroundPosition: imagePosition,
-          filter: imageFilter,
-        }}
-        aria-hidden={ariaHidden}
-      />
-    );
+    const imageStyle: CSSProperties = {
+      ...frameStyle(pageBg),
+      backgroundImage: `${filmImageOverlay(dark)}, url('${imageSrc}')`,
+      backgroundSize: "cover",
+      backgroundPosition: imagePosition,
+      filter: imageFilter,
+    };
+    if (reveal) {
+      return <Reveal className={baseClass} style={imageStyle} aria-hidden={ariaHidden} />;
+    }
+    return <div className={baseClass} style={imageStyle} aria-hidden={ariaHidden} />;
   }
 
   return null;

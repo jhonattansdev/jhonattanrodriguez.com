@@ -1,3 +1,5 @@
+import { Reveal } from "@/components/shared/reveal";
+
 export type NumberedListVariant = "card" | "flat" | "step";
 
 export type NumberedListItem = {
@@ -36,7 +38,12 @@ export function NumberedList({
   uppercaseTitle = false,
 }: NumberedListProps) {
   return (
-    <ol className={gridClassName ?? "space-y-6 min-w-0"} aria-labelledby={ariaLabelledBy}>
+    <Reveal
+      as="ol"
+      stagger
+      className={gridClassName ?? "space-y-6 min-w-0"}
+      aria-labelledby={ariaLabelledBy}
+    >
       {items.map((item, i) => {
         const chip = (
           <div
@@ -114,6 +121,6 @@ export function NumberedList({
           </li>
         );
       })}
-    </ol>
+    </Reveal>
   );
 }

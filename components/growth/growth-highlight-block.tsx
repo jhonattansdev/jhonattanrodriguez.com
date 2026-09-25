@@ -28,12 +28,12 @@ export function GrowthHighlightBlock({
         border: `1px solid ${border}`,
       }}
     >
-      <h4
+      <h3
         className="font-semibold text-sm mb-2"
         style={{ fontFamily: "var(--font-quicksand), 'Quicksand', sans-serif", color: accent }}
       >
         {title}
-      </h4>
+      </h3>
       <div
         className="text-sm sm:text-base leading-relaxed text-pretty"
         style={{ fontFamily: "var(--font-lato), 'Lato', sans-serif", color: textPrimary }}

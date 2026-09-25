@@ -7,7 +7,10 @@ import { RouteHeroStack } from "@/components/sections/route-hero-stack";
 import { ThemedPageShell } from "@/components/sections/themed-page-shell";
 import { CTACalendar, CTAWhatsApp } from "@/components/cta-buttons";
 import { GlowButton } from "@/components/shared/glow-button";
+import { Reveal } from "@/components/shared/reveal";
+import { TypedText } from "@/components/shared/typed-text";
 import { DeveloperAIPhilosophySection } from "@/components/developer-ai/developer-ai-philosophy-section";
+import { DeveloperShowcase } from "@/components/developer-ai/developer-showcase";
 import { ProjectCard } from "@/components/developer-ai/project-card";
 import { ProjectSheet } from "@/components/developer-ai/project-sheet";
 import { getGitHubLabel, getGitHubProfileLink } from "@/lib/cta-links";
@@ -140,7 +143,7 @@ export default function DeveloperAIPage() {
         />
         <div className={ROUTE_HERO_CONTENT}>
           <div className={ROUTE_HERO_INNER}>
-          <div className="mb-4 flex justify-center">
+          <Reveal className="mb-4 flex justify-center">
             <GlowButton
               href={getGitHubProfileLink()}
               external
@@ -154,14 +157,16 @@ export default function DeveloperAIPage() {
                 {getGitHubLabel()}
               </span>
             </GlowButton>
-          </div>
-          <p
+          </Reveal>
+          <Reveal
+            as="p"
+            delay={90}
             className="film-display-kicker font-semibold mb-4 text-center"
             style={{ fontFamily: "var(--font-lato), sans-serif", color: display }}
           >
             Developer AI
-          </p>
-          <h1 className={devHeroH1Class} style={devHeroH1Style}>
+          </Reveal>
+          <Reveal as="h1" delay={180} className={devHeroH1Class} style={devHeroH1Style}>
             <span className="md:hidden">
               <span className="block">La tecnología</span>
               <span className="block">es lo más</span>
@@ -175,19 +180,21 @@ export default function DeveloperAIPage() {
                 cercano a la <span style={{ color: t.accent }}>magia.</span>
               </span>
             </span>
-          </h1>
-          <p
+          </Reveal>
+          <Reveal
+            as="p"
+            delay={270}
             className="text-base md:text-lg max-w-2xl mx-auto leading-relaxed text-pretty mb-6"
             style={{ fontFamily: "var(--font-lato), 'Lato', sans-serif", color: t.text.secondary }}
           >
             Creo firmemente que el software y la inteligencia artificial pueden transformar la calidad
             de vida en Colombia y Latinoamérica. Desde 2025, el desarrollo de software se ha
             democratizado y hoy construir soluciones está al alcance de más personas.
-          </p>
-          <div className="flex flex-wrap gap-4 justify-center">
+          </Reveal>
+          <Reveal delay={360} className="flex flex-wrap gap-4 justify-center">
             <CTACalendar variant="primary" dark={dark} accentColor={t.accent} accentSolidColor={t.accentSolid} />
             <CTAWhatsApp variant="secondary" context="builder" dark={dark} accentColor={t.accent} />
-          </div>
+          </Reveal>
 
           <RouteHeroStack
             stackLabel="> stack --developer_ai"
@@ -209,7 +216,7 @@ export default function DeveloperAIPage() {
       {/* Projects */}
       <section className="py-12 relative" style={{ borderTop: `1px solid ${t.border}` }}>
         <div className="max-w-5xl mx-auto px-6">
-          <div className="text-center mb-8">
+          <Reveal className="text-center mb-8">
             <h2
               className="font-bold text-2xl mb-2"
               style={{ fontFamily: "var(--font-quicksand), 'Quicksand', sans-serif", color: t.text.primary }}
@@ -223,10 +230,10 @@ export default function DeveloperAIPage() {
               “Las personas que son tan locas y creen que pueden cambiar el mundo, son las que lo hacen.”
               <span className="block mt-2 text-sm" style={{ color: t.text.muted }}>Steve Paul Jobs</span>
             </p>
-          </div>
+          </Reveal>
 
           {/* Project gallery + detail sheet */}
-          <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+          <Reveal stagger className="grid grid-cols-1 gap-5 md:grid-cols-2">
             {BUILDER_PROJECTS.map((project, i) => (
               <ProjectCard
                 key={project.title}
@@ -240,7 +247,7 @@ export default function DeveloperAIPage() {
                 }}
               />
             ))}
-          </div>
+          </Reveal>
           <ProjectSheet
             project={selectedIndex === null ? null : BUILDER_PROJECTS[selectedIndex]}
             open={sheetOpen}
@@ -255,6 +262,16 @@ export default function DeveloperAIPage() {
         </div>
       </section>
 
+      <DeveloperShowcase
+        theme={{
+          border: t.border,
+          card: t.card,
+          accent: t.accent,
+          accentSolid: t.accentSolid,
+          textSecondary: t.text.secondary,
+        }}
+      />
+
       {/* Services */}
       <section className="py-12 relative" style={{ borderTop: `1px solid ${t.border}` }}>
         <div className="max-w-5xl mx-auto px-6 text-center">
@@ -262,15 +279,16 @@ export default function DeveloperAIPage() {
             className={terminalLabelClass}
             style={terminalLabelStyle}
           >
-            {"> services --list"}
+            <TypedText text="> services --list" />
           </span>
-          <h2
+          <Reveal
+            as="h2"
             className="font-bold text-2xl mb-8"
             style={{ fontFamily: "var(--font-quicksand), 'Quicksand', sans-serif", color: t.text.primary }}
           >
             ¿Qué podemos construir?
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          </Reveal>
+          <Reveal stagger className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {services.map((s, i) => (
               <div
                 key={i}
@@ -297,7 +315,7 @@ export default function DeveloperAIPage() {
                 </p>
               </div>
             ))}
-          </div>
+          </Reveal>
         </div>
       </section>
 
@@ -382,7 +400,7 @@ export default function DeveloperAIPage() {
       {/* CTA Section */}
       <section className="py-16 relative" style={{ borderTop: `1px solid ${t.border}` }}>
         <div className="max-w-5xl mx-auto px-6">
-          <div
+          <Reveal
             className="p-10 rounded-3xl text-center backdrop-blur-xl"
             style={{
               background: t.card,
@@ -429,7 +447,7 @@ export default function DeveloperAIPage() {
                 Ver el repositorio
               </GlowButton>
             </div>
-          </div>
+          </Reveal>
         </div>
       </section>
     </ThemedPageShell>

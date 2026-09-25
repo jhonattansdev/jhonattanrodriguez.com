@@ -1,19 +1,21 @@
 "use client";
 
 import { useTheme } from "@teispace/next-themes";
-import { useCallback, useEffect, useState, type CSSProperties } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import type { GrowthAccordionTheme } from "@/components/growth/growth-accordion-item";
-import { GrowthOfferingsList } from "@/components/growth/growth-offerings-list";
+import { GrowthOfferings } from "@/components/growth/growth-offerings";
+import { GrowthShowcase } from "@/components/growth/growth-showcase";
 import { ThemedPageShell } from "@/components/sections/themed-page-shell";
 import { CTASection, CTACalendar, CTAWhatsApp } from "@/components/cta-buttons";
 import { getLinkedInLink, getLinkedInLabel } from "@/lib/cta-links";
 import { GlowButton } from "@/components/shared/glow-button";
+import { Reveal } from "@/components/shared/reveal";
 import { RouteHeroStack } from "@/components/sections/route-hero-stack";
 import { useGrowthOfferingHash } from "@/hooks/use-growth-offering-hash";
 import { GROWTH_STACK, THEMES } from "@/lib/design-tokens";
 import {
   GROWTH_INITIAL_INNER_EXPANDED,
-  toggleOffering,
+  GROWTH_OFFERING_ORDER,
   type GrowthInnerExpanded,
   type GrowthOfferingId,
 } from "@/lib/growth-data";
@@ -26,18 +28,14 @@ import {
 export default function GrowthPage() {
   const { theme } = useTheme();
   const [mounted, setMounted] = useState(false);
-  const [expandedOffering, setExpandedOffering] = useState<GrowthOfferingId | null>(null);
+  const [selectedOffering, setSelectedOffering] = useState<GrowthOfferingId>(GROWTH_OFFERING_ORDER[0]);
   const [innerExpanded, setInnerExpanded] = useState<GrowthInnerExpanded>(GROWTH_INITIAL_INNER_EXPANDED);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  useGrowthOfferingHash(setExpandedOffering);
-
-  const handleToggleOffering = useCallback((id: GrowthOfferingId) => {
-    setExpandedOffering((prev) => toggleOffering(prev, id));
-  }, []);
+  useGrowthOfferingHash(setSelectedOffering);
 
   if (!mounted) {
     return <div className="min-h-screen" style={{ background: THEMES.growth.dark.bg }} />;
@@ -110,7 +108,7 @@ export default function GrowthPage() {
         />
         <div className={ROUTE_HERO_CONTENT}>
           <div className={ROUTE_HERO_INNER}>
-            <div className="mb-4 flex justify-center">
+            <Reveal className="mb-4 flex justify-center">
               <GlowButton
                 href={getLinkedInLink()}
                 external
@@ -138,14 +136,18 @@ export default function GrowthPage() {
                   {getLinkedInLabel()}
                 </span>
               </GlowButton>
-            </div>
-            <p
+            </Reveal>
+            <Reveal
+              as="p"
+              delay={90}
               className="film-display-kicker font-semibold mb-4 text-center"
               style={{ fontFamily: "var(--font-lato), sans-serif", color: display }}
             >
               Growth Hacker
-            </p>
-            <h1
+            </Reveal>
+            <Reveal
+              as="h1"
+              delay={180}
               className="font-bold leading-[1.1] mb-4 text-center"
               style={{
                 fontFamily: "var(--font-quicksand), 'Quicksand', sans-serif",
@@ -173,16 +175,21 @@ export default function GrowthPage() {
                   permiso de nadie para crecer.
                 </span>
               </span>
-            </h1>
-            <p
+            </Reveal>
+            <Reveal
+              as="p"
+              delay={270}
               className="text-base md:text-lg max-w-2xl mx-auto leading-relaxed mb-6 text-pretty"
               style={{ ...bodyStyle, lineHeight: 1.7 }}
             >
               Es imposible delegar bien lo que no entiendes. Te entreno en pensamiento sistémico,
               posicionamiento de marca y metodologías ágiles para que lideres tu operación con estrategia
               y la cedas cuando quieras, no porque no te quede otra.
-            </p>
-            <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 justify-center items-center">
+            </Reveal>
+            <Reveal
+              delay={360}
+              className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 justify-center items-center"
+            >
               <CTACalendar
                 variant="primary"
                 dark={dark}
@@ -197,7 +204,7 @@ export default function GrowthPage() {
                 label="Hablemos de tu operación"
               />
               <GlowButton
-                href="#metaads"
+                href="#servicios"
                 variant="ghost"
                 size="md"
                 accentColor={t.accent}
@@ -206,7 +213,7 @@ export default function GrowthPage() {
               >
                 Ver ofertas
               </GlowButton>
-            </div>
+            </Reveal>
             <RouteHeroStack
               stackLabel="> stack --growth"
               items={GROWTH_STACK}
@@ -223,29 +230,37 @@ export default function GrowthPage() {
         <div className="hero-bottom-fade hero-bottom-fade--growth" aria-hidden />
       </section>
 
-      <section className="py-16 sm:py-20 relative">
-        <div className="max-w-5xl mx-auto px-6 space-y-4 sm:space-y-6">
-          <GrowthOfferingsList
-            expandedOffering={expandedOffering}
-            onToggleOffering={handleToggleOffering}
-            pageTheme={pageTheme}
-            accordionTheme={accordionTheme}
-            innerExpanded={innerExpanded}
-            setInnerExpanded={setInnerExpanded}
-          />
-        </div>
-      </section>
+      <GrowthShowcase
+        theme={{
+          border: t.border,
+          card: t.card,
+          accent: t.accent,
+          accentSolid: t.accentSolid,
+          textSecondary: t.text.secondary,
+        }}
+      />
+
+      <GrowthOfferings
+        selectedId={selectedOffering}
+        onSelect={setSelectedOffering}
+        pageTheme={pageTheme}
+        accordionTheme={accordionTheme}
+        innerExpanded={innerExpanded}
+        setInnerExpanded={setInnerExpanded}
+      />
 
       <section className="py-16 sm:py-20 relative" style={{ borderTop: `1px solid ${t.border}` }}>
         <div className="max-w-5xl mx-auto px-6">
-          <CTASection
-            dark={dark}
-            accentColor={t.accent}
-            accentSolidColor={t.accentSolid}
-            context="growth"
-            title="¿Listo para tomar el control?"
-            description="Agenda una sesión de diagnóstico o escríbeme directamente para conocer tu caso."
-          />
+          <Reveal>
+            <CTASection
+              dark={dark}
+              accentColor={t.accent}
+              accentSolidColor={t.accentSolid}
+              context="growth"
+              title="¿Listo para tomar el control?"
+              description="Agenda una sesión de diagnóstico o escríbeme directamente para conocer tu caso."
+            />
+          </Reveal>
         </div>
       </section>
     </ThemedPageShell>

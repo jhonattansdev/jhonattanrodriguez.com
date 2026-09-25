@@ -1,4 +1,6 @@
 import type { CSSProperties } from "react";
+import { Reveal } from "@/components/shared/reveal";
+import { TypedText } from "@/components/shared/typed-text";
 import type { DeveloperAIPhilosophySection } from "@/lib/developer-ai-data";
 import type { THEMES } from "@/lib/design-tokens";
 
@@ -25,10 +27,10 @@ export function DeveloperAIPhilosophySection({
     >
       <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center">
         <span className={`${terminalLabelClass} mb-6`} style={terminalLabelStyle}>
-          {data.terminalLabel}
+          <TypedText text={data.terminalLabel} />
         </span>
 
-        <div className="max-w-2xl mx-auto text-center text-pretty text-balance">
+        <Reveal delay={150} className="max-w-2xl mx-auto text-center text-pretty text-balance">
           <blockquote className="mb-10 m-0">
             <p
               className="text-base md:text-lg font-normal m-0"
@@ -75,7 +77,7 @@ export function DeveloperAIPhilosophySection({
               {data.closingLine}
             </p>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

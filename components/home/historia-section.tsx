@@ -1,8 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { useState, type CSSProperties } from "react";
+import { useRef, useState, type CSSProperties } from "react";
 import { ThemeImageBackground } from "@/components/home/theme-image-background";
+import { Reveal } from "@/components/shared/reveal";
+import { useTimelineProgress } from "@/hooks/use-timeline-progress";
 import { HISTORIA_TIMELINE } from "@/lib/historia-data";
 import type { THEMES } from "@/lib/design-tokens";
 
@@ -31,6 +33,8 @@ function getMediaFrameBackground(dark: boolean, mediaSrc: string | undefined, me
 
 export function HistoriaSection({ dark, t }: HistoriaSectionProps) {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+  const timelineRef = useRef<HTMLDivElement | null>(null);
+  useTimelineProgress(timelineRef);
 
   return (
     <div
@@ -45,7 +49,8 @@ export function HistoriaSection({ dark, t }: HistoriaSectionProps) {
 
       <section className="relative z-10 flex flex-col justify-center overflow-x-hidden pt-10 pb-12 sm:pb-16">
         <div className="max-w-3xl mx-auto px-6 w-full text-center flex flex-col items-center">
-          <span
+          <Reveal
+            as="span"
             className="inline-block text-[11px] sm:text-xs tracking-[0.14em] sm:tracking-[0.22em] uppercase font-semibold mb-6 px-4 py-2 rounded-full backdrop-blur-sm"
             style={{
               fontFamily: "var(--font-lato), 'Lato', sans-serif",
@@ -54,9 +59,11 @@ export function HistoriaSection({ dark, t }: HistoriaSectionProps) {
             }}
           >
             CV | Storytelling
-          </span>
+          </Reveal>
 
-          <h2
+          <Reveal
+            as="h2"
+            delay={90}
             className="font-bold leading-tight mb-5 text-center text-balance max-w-4xl mx-auto"
             style={{
               fontFamily: "var(--font-quicksand), 'Quicksand', sans-serif",
@@ -77,40 +84,42 @@ export function HistoriaSection({ dark, t }: HistoriaSectionProps) {
                 mirando hacia el pasado.
               </span>
             </span>
-          </h2>
+          </Reveal>
 
-          <blockquote
-            cite="https://news.stanford.edu/news/2005/june15/jobs-061505.html"
-            className="max-w-2xl mx-auto mb-8 text-center text-pretty"
-          >
-            <p
-              className="text-base md:text-lg font-normal m-0"
-              style={{
-                fontFamily: "var(--font-lato), 'Lato', sans-serif",
-                color: t.text.secondary,
-                lineHeight: 1.7,
-              }}
+          <Reveal delay={180}>
+            <blockquote
+              cite="https://news.stanford.edu/news/2005/june15/jobs-061505.html"
+              className="max-w-2xl mx-auto mb-8 text-center text-pretty"
             >
-              «No puedes conectar los puntos mirando hacia el futuro; solo puedes conectarlos mirando hacia el
-              pasado. Así que tienes que confiar en que los puntos, de algún modo, se conectarán en tu futuro.»
-            </p>
-            <footer
-              className="mt-3 text-[15px] leading-snug"
-              style={{
-                fontFamily: "var(--font-lato), sans-serif",
-                color: t.text.muted,
-                fontWeight: 500,
-              }}
-            >
-              Steve Jobs
-            </footer>
-          </blockquote>
+              <p
+                className="text-base md:text-lg font-normal m-0"
+                style={{
+                  fontFamily: "var(--font-lato), 'Lato', sans-serif",
+                  color: t.text.secondary,
+                  lineHeight: 1.7,
+                }}
+              >
+                «No puedes conectar los puntos mirando hacia el futuro; solo puedes conectarlos mirando hacia el
+                pasado. Así que tienes que confiar en que los puntos, de algún modo, se conectarán en tu futuro.»
+              </p>
+              <footer
+                className="mt-3 text-[15px] leading-snug"
+                style={{
+                  fontFamily: "var(--font-lato), sans-serif",
+                  color: t.text.muted,
+                  fontWeight: 500,
+                }}
+              >
+                Steve Jobs
+              </footer>
+            </blockquote>
+          </Reveal>
         </div>
       </section>
 
       <section className="relative z-10 pt-4 pb-28">
         <div className="max-w-3xl mx-auto px-6">
-          <div className="relative">
+          <div ref={timelineRef} className="relative">
             {/* Timeline line */}
             <div
               className="absolute left-[19px] top-8 bottom-8 w-px hidden sm:block"
@@ -119,6 +128,12 @@ export function HistoriaSection({ dark, t }: HistoriaSectionProps) {
                   ? "linear-gradient(to bottom, rgba(255,255,255,0.15), rgba(255,255,255,0.03))"
                   : `linear-gradient(to bottom, ${t.accent}30, ${t.accent}05)`,
               }}
+            />
+            {/* Progreso: se dibuja con el scroll (hooks/use-timeline-progress.ts) */}
+            <div
+              aria-hidden
+              className="tl-progress absolute left-[19px] top-8 bottom-8 w-px hidden sm:block"
+              style={{ background: `linear-gradient(to bottom, ${t.accent}, ${t.accent}55)` }}
             />
 
             <div className="flex flex-col gap-6">
@@ -137,7 +152,8 @@ export function HistoriaSection({ dark, t }: HistoriaSectionProps) {
                     {/* Dot */}
                     <div className="shrink-0 z-10 mt-1 hidden sm:block">
                       <div
-                        className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 group-hover:scale-110"
+                        data-tl-dot
+                        className="tl-dot w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 group-hover:scale-110"
                         style={{
                           background: dark ? `${item.color}20` : `${item.color}15`,
                           border: `2px solid ${item.color}`,
@@ -155,7 +171,7 @@ export function HistoriaSection({ dark, t }: HistoriaSectionProps) {
                     </div>
 
                     {/* Card */}
-                    <div
+                    <Reveal
                       className="flex-1 p-6 rounded-2xl transition-all duration-300 backdrop-blur-md"
                       style={{
                         background: getTimelineCardBackground(dark, isOpen),
@@ -280,7 +296,7 @@ export function HistoriaSection({ dark, t }: HistoriaSectionProps) {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </Reveal>
                   </div>
                 );
               })}

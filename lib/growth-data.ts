@@ -46,19 +46,20 @@ export type GrowthOfferingMeta = {
   priceNote?: string;
   calendarLabel?: string;
   priceSize?: "lg" | "md";
-  scrollAnchor?: boolean;
-  tallDetails?: boolean;
+  /** Nombre corto para la mini-card del selector. */
+  tabTitle: string;
+  /** Datos clave en una línea para la mini-card (sesiones · duración). */
+  tabFacts: string;
 };
 
 export type GrowthInnerExpanded = Partial<Record<GrowthOfferingId, number | null>>;
 
+/**
+ * Orden del selector de /growth (máximo 7 servicios). Para sumar uno: agregar
+ * su id a `GrowthOfferingId`, su entrada en `GROWTH_OFFERINGS`, su componente
+ * en `lib/growth-offering-content.tsx` y su id aquí.
+ */
 export const GROWTH_OFFERING_ORDER: GrowthOfferingId[] = [
-  "metaads",
-  "presencia-rrss",
-  "control-marca-rrss",
-];
-
-const GROWTH_OFFERING_IDS: GrowthOfferingId[] = [
   "metaads",
   "presencia-rrss",
   "control-marca-rrss",
@@ -280,7 +281,8 @@ export const GROWTH_OFFERINGS: Record<GrowthOfferingId, GrowthOfferingMeta> = {
     duration: GROWTH_METAADS.duration,
     priceNote: GROWTH_METAADS.priceNote,
     priceSize: "lg",
-    scrollAnchor: true,
+    tabTitle: "Meta Ads",
+    tabFacts: "3 sesiones · 3.5 h",
   },
   "presencia-rrss": {
     id: "presencia-rrss",
@@ -292,8 +294,8 @@ export const GROWTH_OFFERINGS: Record<GrowthOfferingId, GrowthOfferingMeta> = {
     duration: GROWTH_PRESENCIA_RRSS.duration,
     calendarLabel: GROWTH_PRESENCIA_RRSS.calendarLabel,
     priceSize: "md",
-    scrollAnchor: true,
-    tallDetails: true,
+    tabTitle: "Marca personal",
+    tabFacts: "4 sesiones · 15 días",
   },
   "control-marca-rrss": {
     id: "control-marca-rrss",
@@ -306,7 +308,8 @@ export const GROWTH_OFFERINGS: Record<GrowthOfferingId, GrowthOfferingMeta> = {
     priceNote: GROWTH_CONTROL_MARCA_RRSS.priceNote,
     calendarLabel: GROWTH_CONTROL_MARCA_RRSS.calendarLabel,
     priceSize: "md",
-    tallDetails: true,
+    tabTitle: "Control de marca",
+    tabFacts: "12 sesiones · ~3 meses",
   },
 };
 
@@ -316,16 +319,9 @@ export function toggleSingleExpanded(current: number | null, index: number): num
   return current === index ? null : index;
 }
 
-export function toggleOffering(
-  current: GrowthOfferingId | null,
-  id: GrowthOfferingId
-): GrowthOfferingId | null {
-  return current === id ? null : id;
-}
-
 export function isGrowthOfferingHash(hash: string): hash is GrowthOfferingId {
   const id = hash.replace(/^#/, "");
-  return (GROWTH_OFFERING_IDS as string[]).includes(id);
+  return (GROWTH_OFFERING_ORDER as string[]).includes(id);
 }
 
 export function parseGrowthOfferingHash(): GrowthOfferingId | null {

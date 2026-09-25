@@ -36,10 +36,11 @@ type SurfaceTheme = {
   div: string;
   ab: string;
   gb: string;
+  badgeText: string;
 };
 
 export function getPlanSurface(theme: SurfaceTheme): PlanSurface {
-  const { tp, ts, tm, accent, accentSolid, cardBg, div, ab, gb } = theme;
+  const { tp, ts, tm, accent, accentSolid, cardBg, div, ab, gb, badgeText } = theme;
 
   return {
     bg: cardBg,
@@ -64,6 +65,6 @@ export function getPlanSurface(theme: SurfaceTheme): PlanSurface {
     ctaAccent: accent,
     ctaAccentSolid: accentSolid,
     badgeBg: accent,
-    badgeText: "#ffffff",
+    badgeText,
   };
 }

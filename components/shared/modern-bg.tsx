@@ -28,12 +28,9 @@ export function ModernBg({ accentColor, secondaryColor, dark, className = "" }: 
         
         {/* Primary glow - top area */}
         <div
-          className="absolute -top-[30%] left-1/2 -translate-x-1/2 w-[120%] h-[80%] rounded-full"
+          className="absolute -top-[30%] left-1/2 -translate-x-full w-[120%] h-[80%] rounded-full"
           style={{
             background: `radial-gradient(ellipse, ${accentColor}12 0%, transparent 60%)`,
-            filter: "blur(60px)",
-            transform: "translate3d(-50%, 0, 0)",
-            willChange: "transform",
           }}
         />
         
@@ -42,17 +39,6 @@ export function ModernBg({ accentColor, secondaryColor, dark, className = "" }: 
           className="absolute -bottom-[20%] -right-[20%] w-[60%] h-[60%] rounded-full"
           style={{
             background: `radial-gradient(circle, ${secondary}08 0%, transparent 70%)`,
-            filter: "blur(80px)",
-            transform: "translate3d(0, 0, 0)",
-            willChange: "transform",
-          }}
-        />
-        
-        {/* Subtle grain texture */}
-        <div
-          className="absolute inset-0 opacity-[0.012]"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
           }}
         />
       </div>
@@ -79,8 +65,6 @@ export function ModernBg({ accentColor, secondaryColor, dark, className = "" }: 
         className="absolute top-[10%] -right-[10%] w-[50%] h-[50%] rounded-full"
         style={{
           background: `radial-gradient(circle, ${accentColor}15 0%, transparent 60%)`,
-          filter: "blur(60px)",
-          transform: "translate3d(0, 0, 0)",
         }}
       />
       
@@ -89,8 +73,6 @@ export function ModernBg({ accentColor, secondaryColor, dark, className = "" }: 
         className="absolute -bottom-[10%] -left-[10%] w-[40%] h-[40%] rounded-full"
         style={{
           background: `radial-gradient(circle, ${secondary}12 0%, transparent 60%)`,
-          filter: "blur(80px)",
-          transform: "translate3d(0, 0, 0)",
         }}
       />
       
@@ -101,58 +83,6 @@ export function ModernBg({ accentColor, secondaryColor, dark, className = "" }: 
           background: `linear-gradient(to top, ${accentColor}05, transparent)`,
         }}
       />
-      
-      {/* Very subtle noise texture */}
-      <div
-        className="absolute inset-0 opacity-[0.02]"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
-        }}
-      />
     </div>
-  );
-}
-
-/**
- * FloatingOrb - Individual floating orb for custom placement
- */
-interface FloatingOrbProps {
-  color: string;
-  size?: string;
-  top?: string;
-  left?: string;
-  right?: string;
-  bottom?: string;
-  blur?: number;
-  opacity?: number;
-}
-
-export function FloatingOrb({
-  color,
-  size = "40%",
-  top,
-  left,
-  right,
-  bottom,
-  blur = 60,
-  opacity = 0.15,
-}: FloatingOrbProps) {
-  return (
-    <div
-      className="absolute rounded-full pointer-events-none"
-      style={{
-        width: size,
-        height: size,
-        top,
-        left,
-        right,
-        bottom,
-        background: `radial-gradient(circle, ${color} 0%, transparent 70%)`,
-        opacity,
-        filter: `blur(${blur}px)`,
-        transform: "translate3d(0, 0, 0)",
-        willChange: "transform",
-      }}
-    />
   );
 }

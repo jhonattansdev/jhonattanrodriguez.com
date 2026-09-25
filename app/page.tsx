@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useTheme } from "@teispace/next-themes";
 import { useEffect, useState, type CSSProperties } from "react";
 import { GlowButton, ArrowRightIcon } from "@/components/shared/glow-button";
+import { Reveal } from "@/components/shared/reveal";
 import { CTASection } from "@/components/cta-buttons";
 import { ThemeImageBackground } from "@/components/home/theme-image-background";
 import { HistoriaSection } from "@/components/home/historia-section";
@@ -64,7 +65,7 @@ export default function HomePage() {
         <div className="flex flex-1 items-center justify-center relative z-10">
             <div className="max-w-4xl mx-auto px-6 text-center relative z-10 w-full">
           {/* Location badge */}
-          <div
+          <Reveal
             className="inline-flex items-center gap-2 text-xs tracking-[0.18em] uppercase mb-8 px-4 py-2.5 rounded-full backdrop-blur-sm transition-all duration-300"
             style={{
               fontFamily: "var(--font-lato), 'Lato', sans-serif",
@@ -78,10 +79,12 @@ export default function HomePage() {
               style={{ background: dark ? "#4ade80" : "#16a34a" }}
             />
             Bogotá, Colombia
-          </div>
+          </Reveal>
 
           {/* Name */}
-          <h1
+          <Reveal
+            as="h1"
+            delay={90}
             className="mb-6 leading-none"
             style={{
               fontFamily: "var(--font-engagement), 'Engagement', cursive",
@@ -90,10 +93,10 @@ export default function HomePage() {
             }}
           >
             Jhonattan Rodriguez
-          </h1>
+          </Reveal>
 
           {/* Roles */}
-          <div className="flex items-center justify-center gap-2 md:gap-5 mb-8 flex-wrap">
+          <Reveal delay={180} className="flex items-center justify-center gap-2 md:gap-5 mb-8 flex-wrap">
             {services.map((item, i) => (
               <span key={i} className="flex items-center gap-2 md:gap-3">
                 {i > 0 && (
@@ -111,10 +114,12 @@ export default function HomePage() {
                 </Link>
               </span>
             ))}
-          </div>
+          </Reveal>
 
           {/* Description */}
-          <p
+          <Reveal
+            as="p"
+            delay={270}
             className="text-base md:text-lg max-w-2xl mx-auto leading-relaxed mb-12"
             style={{
               fontFamily: "var(--font-lato), 'Lato', sans-serif",
@@ -125,10 +130,10 @@ export default function HomePage() {
             multidisciplinario que le puede aportar demasiado valor a tu estrategia empresarial.
             La perspectiva 360 que tengo en los modelos de negocio me convierte en un aliado
             estratégico de CEOs & equipos fundadores en su proceso de expansión digital y tecnológico.
-          </p>
+          </Reveal>
 
           {/* CTA buttons */}
-          <div className="flex gap-4 justify-center flex-wrap">
+          <Reveal delay={360} className="flex gap-4 justify-center flex-wrap">
             <GlowButton
               href="#disciplinas"
               variant="primary"
@@ -146,7 +151,7 @@ export default function HomePage() {
             >
               CV
             </GlowButton>
-          </div>
+          </Reveal>
             </div>
           </div>
 
@@ -169,7 +174,7 @@ export default function HomePage() {
       {/* Services cards */}
       <section id="disciplinas" className="relative">
           <div className="relative z-10 max-w-5xl mx-auto px-6 py-24">
-          <div className="mb-16 text-center discipline-surface px-5 py-10 sm:px-8 sm:py-12 md:px-10">
+          <Reveal className="mb-16 text-center discipline-surface px-5 py-10 sm:px-8 sm:py-12 md:px-10">
             <span
               className="inline-block text-xs tracking-[0.22em] uppercase font-medium mb-4 px-4 py-2 rounded-full"
               style={{
@@ -193,9 +198,9 @@ export default function HomePage() {
               <br className="md:hidden" />
               CADA UNA CON SU RUTA»
             </h2>
-          </div>
+          </Reveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <Reveal stagger className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {services.map((card, i) => (
               <Link
                 key={i}
@@ -259,20 +264,22 @@ export default function HomePage() {
                 </div>
               </Link>
             ))}
-          </div>
+          </Reveal>
           </div>
         </section>
 
       {/* CTA Section */}
       <section style={{ borderTop: `1px solid ${t.border}` }}>
         <div className="max-w-4xl mx-auto px-6">
-          <CTASection
-            dark={dark}
-            accentColor={t.accent}
-            accentSolidColor={t.accentSolid}
-            title="¿Listo para empezar?"
-            description="Agenda una llamada para conocer tu proyecto o escríbeme directamente por WhatsApp."
-          />
+          <Reveal>
+            <CTASection
+              dark={dark}
+              accentColor={t.accent}
+              accentSolidColor={t.accentSolid}
+              title="¿Listo para empezar?"
+              description="Agenda una llamada para conocer tu proyecto o escríbeme directamente por WhatsApp."
+            />
+          </Reveal>
         </div>
       </section>
     </div>

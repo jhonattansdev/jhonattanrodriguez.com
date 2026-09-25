@@ -5,6 +5,7 @@ import { useEffect, useLayoutEffect, useState, type CSSProperties } from "react"
 import { RouteHeroStack } from "@/components/sections/route-hero-stack";
 import { ThemedPageShell } from "@/components/sections/themed-page-shell";
 import { GlowButton } from "@/components/shared/glow-button";
+import { Reveal } from "@/components/shared/reveal";
 import { FilmMediaFrame } from "@/components/filmmaker/film-media-frame";
 import { NumberedList } from "@/components/filmmaker/numbered-list";
 import { FilmPlansSection } from "@/components/filmmaker/plans-section";
@@ -81,6 +82,7 @@ export default function FilmmakerPage() {
     div,
     ab,
     gb,
+    badgeText: dark ? "#0a0704" : "#ffffff",
   };
 
   return (
@@ -134,7 +136,7 @@ export default function FilmmakerPage() {
 
         <div className={ROUTE_HERO_CONTENT}>
           <div className={ROUTE_HERO_INNER}>
-          <div className="mb-4 flex justify-center">
+          <Reveal className="mb-4 flex justify-center">
             <GlowButton
               href={getYouTubeLink()}
               external
@@ -161,14 +163,18 @@ export default function FilmmakerPage() {
                 {getYouTubeLabel()}
               </span>
             </GlowButton>
-          </div>
-          <p
+          </Reveal>
+          <Reveal
+            as="p"
+            delay={90}
             className="film-display-kicker font-semibold mb-4"
             style={{ fontFamily: "var(--font-lato), sans-serif", color: display }}
           >
             Filmmaker
-          </p>
-          <h1
+          </Reveal>
+          <Reveal
+            as="h1"
+            delay={180}
             className="font-bold leading-tight mb-4 text-center"
             style={{
               fontFamily: "var(--font-quicksand), 'Quicksand', sans-serif",
@@ -190,8 +196,10 @@ export default function FilmmakerPage() {
                 <span style={{ color: t.accent }}>eficiente y efectivo.</span>
               </span>
             </span>
-          </h1>
-          <p
+          </Reveal>
+          <Reveal
+            as="p"
+            delay={270}
             className="text-base md:text-lg max-w-2xl mx-auto leading-relaxed mb-6 text-pretty"
             style={{
               fontFamily: "var(--font-lato), 'Lato', sans-serif",
@@ -202,8 +210,11 @@ export default function FilmmakerPage() {
             Este sistema se ha implementado con más de 30 marcas personales, comunidades y empresas,
             siendo ágiles en la producción sin perder la calidad siempre que ejecutemos el paso a paso
             de la metodología.
-          </p>
-          <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 justify-center items-center">
+          </Reveal>
+          <Reveal
+            delay={360}
+            className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 justify-center items-center"
+          >
             <GlowButton
               href="#portafolio"
               variant="primary"
@@ -224,7 +235,7 @@ export default function FilmmakerPage() {
             >
               Ver planes
             </GlowButton>
-          </div>
+          </Reveal>
           <RouteHeroStack
             stackLabel="> stack --filmmaker"
             items={FILM_STACK}
@@ -244,7 +255,7 @@ export default function FilmmakerPage() {
       {/* ─── PROBLEMA ───────────────────────────────────────────────────────────── */}
       <section className="py-16 sm:py-20 relative" style={{ borderTop: `1px solid ${t.border}` }}>
         <div className="max-w-5xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center">
-          <div className="text-center lg:text-left order-2 lg:order-1">
+          <Reveal className="text-center lg:text-left order-2 lg:order-1">
             <span
               className="film-display-kicker font-medium block mb-3"
               style={{ fontFamily: "var(--font-lato), sans-serif", color: display }}
@@ -265,8 +276,9 @@ export default function FilmmakerPage() {
               Cada pieza toma días de planificación, rodaje y edición. La solución: un sistema
               optimizado que entrega contenido de calidad profesional en tiempo récord.
             </p>
-          </div>
+          </Reveal>
           <FilmMediaFrame
+            reveal
             variant="image"
             imageSrc={FILM_MEDIA.problema.src}
             imagePosition={FILM_MEDIA.problema.position}
@@ -292,22 +304,25 @@ export default function FilmmakerPage() {
       {/* ─── PROCESO ──────────────────────────────────────────────────────────── */}
       <section className="py-16 sm:py-24 relative" style={{ borderTop: `1px solid ${t.border}` }}>
         <div className="max-w-5xl mx-auto px-6 text-center">
-          <span
-            className="film-display-kicker font-medium block mb-3"
-            style={{ fontFamily: "var(--font-lato), sans-serif", color: display }}
-          >
-            Cómo trabajamos
-          </span>
-          <h2
-            id="film-process-heading"
-            className="font-semibold text-2xl sm:text-3xl mb-8 md:mb-10"
-            style={{ fontFamily: "var(--font-quicksand), sans-serif", color: tp }}
-          >
-            Proceso de producción
-          </h2>
+          <Reveal>
+            <span
+              className="film-display-kicker font-medium block mb-3"
+              style={{ fontFamily: "var(--font-lato), sans-serif", color: display }}
+            >
+              Cómo trabajamos
+            </span>
+            <h2
+              id="film-process-heading"
+              className="font-semibold text-2xl sm:text-3xl mb-8 md:mb-10"
+              style={{ fontFamily: "var(--font-quicksand), sans-serif", color: tp }}
+            >
+              Proceso de producción
+            </h2>
+          </Reveal>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 lg:gap-14 items-stretch">
             <FilmMediaFrame
+              reveal
               variant="image"
               imageSrc={FILM_MEDIA.proceso.src}
               imagePosition={FILM_MEDIA.proceso.position}
@@ -326,6 +341,7 @@ export default function FilmmakerPage() {
             />
             {/* En mobile, la foto de edición se ubica entre "Producción" y "Post-producción" para acompañar la transición al deslizar; en desktop mantiene su lugar original (abajo a la derecha). */}
             <FilmMediaFrame
+              reveal
               variant="image"
               imageSrc={FILM_MEDIA.procesoEditor.src}
               imagePosition={FILM_MEDIA.procesoEditor.position}
@@ -362,18 +378,20 @@ export default function FilmmakerPage() {
       {/* ─── POR QUE FUNCIONA ─────────────────────────────────────────────────── */}
       <section className="py-16 sm:py-24 relative" style={{ borderTop: `1px solid ${t.border}` }}>
         <div className="max-w-5xl mx-auto px-6 text-center">
-          <span
-            className="film-display-kicker font-medium block mb-3"
-            style={{ fontFamily: "var(--font-lato), sans-serif", color: display }}
-          >
-            Metodología
-          </span>
-          <h2
-            className="font-semibold text-2xl sm:text-3xl mb-10 sm:mb-14 max-w-2xl mx-auto"
-            style={{ fontFamily: "var(--font-quicksand), sans-serif", color: tp }}
-          >
-            Por qué funciona esta metodología
-          </h2>
+          <Reveal>
+            <span
+              className="film-display-kicker font-medium block mb-3"
+              style={{ fontFamily: "var(--font-lato), sans-serif", color: display }}
+            >
+              Metodología
+            </span>
+            <h2
+              className="font-semibold text-2xl sm:text-3xl mb-10 sm:mb-14 max-w-2xl mx-auto"
+              style={{ fontFamily: "var(--font-quicksand), sans-serif", color: tp }}
+            >
+              Por qué funciona esta metodología
+            </h2>
+          </Reveal>
 
           <NumberedList
             variant="flat"
@@ -388,20 +406,22 @@ export default function FilmmakerPage() {
       {/* ─── RESULTADOS ───────────────────────────────────────────────────────── */}
       <section className="py-16 sm:py-20 relative" style={{ borderTop: `1px solid ${t.border}` }}>
         <div className="max-w-5xl mx-auto px-6 text-center">
-          <span
-            className="film-display-kicker font-medium block mb-3"
-            style={{ fontFamily: "var(--font-lato), sans-serif", color: display }}
-          >
-            Resultados
-          </span>
-          <h2
-            className="font-semibold text-2xl sm:text-3xl mb-12"
-            style={{ fontFamily: "var(--font-quicksand), sans-serif", color: tp }}
-          >
-            Lo que puedes esperar
-          </h2>
+          <Reveal>
+            <span
+              className="film-display-kicker font-medium block mb-3"
+              style={{ fontFamily: "var(--font-lato), sans-serif", color: display }}
+            >
+              Resultados
+            </span>
+            <h2
+              className="font-semibold text-2xl sm:text-3xl mb-12"
+              style={{ fontFamily: "var(--font-quicksand), sans-serif", color: tp }}
+            >
+              Lo que puedes esperar
+            </h2>
+          </Reveal>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-10">
+          <Reveal stagger className="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-10">
             {FILM_RESULTS.map((item, i) => (
               <div key={i} className="text-center">
                 <div
@@ -412,14 +432,14 @@ export default function FilmmakerPage() {
                 </div>
               </div>
             ))}
-          </div>
+          </Reveal>
         </div>
       </section>
 
       {/* ─── CTA FINAL ────────────────────────────────────────────────────────── */}
       <section className="py-16 sm:py-24 relative" style={{ borderTop: `1px solid ${t.border}` }}>
         <div className="max-w-5xl mx-auto px-6">
-          <div
+          <Reveal
             className="relative rounded-3xl overflow-hidden px-6 py-12 sm:px-10 sm:py-14"
             style={{ border: `1px solid ${div}` }}
           >
@@ -442,7 +462,7 @@ export default function FilmmakerPage() {
                 description="Agenda una llamada estratégica (30 min) para evaluar tu marca y objetivos. Confirmamos fechas y arrancamos la pre-producción."
               />
             </div>
-          </div>
+          </Reveal>
         </div>
       </section>
     </ThemedPageShell>
