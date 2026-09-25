@@ -1,3 +1,6 @@
+import { Reveal } from "@/components/shared/reveal";
+import { TypedText } from "@/components/shared/typed-text";
+
 type RouteHeroStackTheme = {
   card: string;
   border: string;
@@ -12,6 +15,9 @@ type RouteHeroStackProps = {
   dark: boolean;
 };
 
+/** Último escalón de la entrada del héroe (chip, kicker, título, párrafo, CTAs). */
+const STACK_DELAY_MS = 450;
+
 export function RouteHeroStack({ stackLabel, items, theme, dark }: RouteHeroStackProps) {
   const labelStyle = {
     color: dark ? "rgba(255,255,255,0.86)" : theme.textSecondary,
@@ -22,9 +28,13 @@ export function RouteHeroStack({ stackLabel, items, theme, dark }: RouteHeroStac
   return (
     <div className="mt-8">
       <span className="inline-block text-sm font-mono mb-4 px-3 py-1.5 rounded-lg" style={labelStyle}>
-        {stackLabel}
+        <TypedText text={stackLabel} delay={STACK_DELAY_MS} />
       </span>
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 justify-items-stretch">
+      <Reveal
+        stagger
+        delay={STACK_DELAY_MS}
+        className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 justify-items-stretch"
+      >
         {items.map((name) => (
           <div
             key={name}
@@ -36,7 +46,7 @@ export function RouteHeroStack({ stackLabel, items, theme, dark }: RouteHeroStac
             </div>
           </div>
         ))}
-      </div>
+      </Reveal>
     </div>
   );
 }
