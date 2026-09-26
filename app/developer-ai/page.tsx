@@ -242,7 +242,7 @@ export default function DeveloperAIPage() {
 
       {/* Projects */}
       <section className="py-12 relative" style={{ borderTop: `1px solid ${t.border}` }}>
-        <div className="max-w-5xl mx-auto px-6">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
           <Reveal className="text-center mb-8">
             <h2
               className="font-bold text-2xl mb-2"
@@ -259,8 +259,11 @@ export default function DeveloperAIPage() {
             </p>
           </Reveal>
 
-          {/* Project gallery + detail sheet */}
-          <Reveal stagger className="grid grid-cols-1 gap-5 md:grid-cols-2">
+          {/* Project gallery + detail sheet. Bajo `md`, tarjetas compactas: 1 columna bajo 360 px, 2 desde ahí y 3 desde 640 px. */}
+          <Reveal
+            stagger
+            className="grid grid-cols-1 gap-3 min-[360px]:grid-cols-2 sm:grid-cols-3 md:grid-cols-2 md:gap-5"
+          >
             {BUILDER_PROJECTS.map((project, i) => (
               <ProjectCard
                 key={project.title}
