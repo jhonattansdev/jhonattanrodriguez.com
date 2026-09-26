@@ -1,4 +1,10 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+import { THEMES } from "@/lib/design-tokens";
+import { shareMetadata } from "@/lib/site-metadata";
+
+export const viewport: Viewport = {
+  themeColor: THEMES.growth.dark.bg,
+};
 
 export const metadata: Metadata = {
   title: "Growth Hacker | Jhonattan Rodriguez",
@@ -14,19 +20,14 @@ export const metadata: Metadata = {
     "Bogotá",
     "Colombia",
   ],
-  openGraph: {
+  ...shareMetadata({
+    path: "/growth",
+    slug: "growth",
     title: "Growth Hacker | Jhonattan Rodriguez",
     description:
       "Aprende a dominar Meta Ads y operar tu marca con sistemas ágiles. Entrenamientos y mentorías 1:1.",
-    type: "website",
-    locale: "es_CO",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Growth Hacker | Jhonattan Rodriguez",
-    description:
-      "Aprende a dominar Meta Ads y operar tu marca con sistemas ágiles. Entrenamientos y mentorías 1:1.",
-  },
+    alt: "Jhonattan Rodriguez, Growth Hacker: Meta Ads, marca y sistemas ágiles",
+  }),
 };
 
 export default function GrowthLayout({

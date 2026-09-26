@@ -1,7 +1,9 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Engagement, Quicksand, Lato } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { ThemeProvider } from "@/components/theme-provider";
+import { THEMES } from "@/lib/design-tokens";
+import { SITE_NAME, SITE_URL, shareMetadata } from "@/lib/site-metadata";
 import { LIGHT_MODE_UI_ENABLED } from "@/lib/site-theme";
 import { NIGHT_INIT_SCRIPT } from "@/lib/night-init-script";
 import { Navbar } from "@/components/navbar";
@@ -28,11 +30,13 @@ const lato = Lato({
   display: "swap",
 });
 
+// Los íconos (favicon.ico, icon.png, apple-icon.png) y el manifest los enlaza Next desde `app/`.
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
+  applicationName: SITE_NAME,
   title: "Jhonattan Rodriguez | Growth Hacker, Filmmaker & Developer AI",
   description:
     "Integro, optimizo y escalo lo que ya funciona en tu negocio con metodologías ágiles, contenido e IA. Growth, video y sistemas. Bogotá, Colombia.",
-  generator: "v0.app",
   keywords: [
     "Growth Hacker",
     "Filmmaker",
@@ -44,30 +48,21 @@ export const metadata: Metadata = {
     "Video Marketing",
   ],
   authors: [{ name: "Jhonattan Rodriguez" }],
-  openGraph: {
+  ...shareMetadata({
+    path: "/",
+    slug: "home",
     title: "Jhonattan Rodriguez | Growth Hacker, Filmmaker & Developer AI",
     description:
       "Metodologías ágiles, contenido e IA integrada para escalar sin equipos enormes ni agencias de alto costo. Growth Hacker, Filmmaker y Developer AI.",
-    type: "website",
-    locale: "es_CO",
-  },
-  icons: {
-    icon: [
-      {
-        url: "/icon-light-32x32.png",
-        media: "(prefers-color-scheme: light)",
-      },
-      {
-        url: "/icon-dark-32x32.png",
-        media: "(prefers-color-scheme: dark)",
-      },
-      {
-        url: "/icon.svg",
-        type: "image/svg+xml",
-      },
-    ],
-    apple: "/apple-icon.png",
-  },
+    alt: "Jhonattan Rodriguez: Growth Hacker, Filmmaker y Developer AI",
+  }),
+  // `statusBarStyle: "black"` (opaco): con "black-translucent" el contenido quedaría bajo el notch.
+  appleWebApp: { capable: true, title: SITE_NAME, statusBarStyle: "black" },
+};
+
+// Solo `themeColor`: sin `colorScheme`, para no cambiar los controles nativos del sitio.
+export const viewport: Viewport = {
+  themeColor: THEMES.index.dark.bg,
 };
 
 export default function RootLayout({

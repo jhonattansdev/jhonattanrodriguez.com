@@ -16,6 +16,8 @@ Modo Night (botón de luna en el navbar; móvil arriba a la derecha; `lib/night-
 
 Navegación móvil (< 768 px): píldora flotante redondeada abajo al centro, con el mismo diseño glass que la del navbar de escritorio (`components/nav/mobile-tab-bar.tsx`). Comprobar que el item activo se ve en píldora con el acento de la ruta, que nada la tapa, que el copyright del footer queda por encima al llegar al final y que a partir de 768 px desaparece y queda la píldora de escritorio.
 
+Compartir e instalar: `lib/site-metadata.ts` (`SITE_URL` y `shareMetadata`) arma `og:*`, `twitter:*` y `canonical` de cada ruta, con la imagen de `public/og/<ruta>.jpg` (1200×630, retrato del hero sobre el color de la sección; `home`, `growth`, `developer-ai`, `filmmaker`). Íconos: `app/favicon.ico`, `app/icon.png`, `app/apple-icon.png`; manifest en `app/manifest.ts` con `public/icons/*` (192, 512 y maskable). Al cambiar una imagen o un texto de compartir, volver a generar el `.jpg` y recordar que WhatsApp guarda la vista previa por URL: probar con `?v=2`.
+
 Incluye navegación desde el navbar (4 rutas: Home, Dev, Growth, Film) y el botón "CV" del hero de Home, que hace scroll a #historia.
 
 Enlaces sociales: editar solo `lib/cta-links.ts` → `SOCIAL_PROFILES`. Botón del hero por sección: Dev = GitHub, Growth = LinkedIn, Film = YouTube (`ROUTE_HERO_SOCIAL`). Instagram queda reservado para la futura sección de coach y por ahora solo aparece en el footer.

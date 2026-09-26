@@ -1,4 +1,10 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+import { THEMES } from "@/lib/design-tokens";
+import { shareMetadata } from "@/lib/site-metadata";
+
+export const viewport: Viewport = {
+  themeColor: THEMES.builder.dark.bg,
+};
 
 export const metadata: Metadata = {
   title: "Developer AI | Jhonattan Rodriguez",
@@ -18,19 +24,14 @@ export const metadata: Metadata = {
     "Bogotá",
     "Colombia",
   ],
-  openGraph: {
+  ...shareMetadata({
+    path: "/developer-ai",
+    slug: "developer-ai",
     title: "Developer AI | Jhonattan Rodriguez",
     description:
       "Sistemas integrados con IA para salud, agentes para el paciente y MVPs rápidos. Orquestación con Claude, Cursor, Supabase y Vercel.",
-    type: "website",
-    locale: "es_CO",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Developer AI | Jhonattan Rodriguez",
-    description:
-      "Sistemas integrados con IA para salud y MVPs en semanas. Ecosistemas clínicos sin agencias ni equipos enormes.",
-  },
+    alt: "Jhonattan Rodriguez, Developer AI: sistemas con IA, agentes y MVPs en semanas",
+  }),
 };
 
 export default function DeveloperAILayout({
