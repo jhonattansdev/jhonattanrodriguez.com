@@ -9,6 +9,12 @@ export type ShareImageSlug = "home" | "growth" | "developer-ai" | "filmmaker";
 
 const SHARE_IMAGE_SIZE = { width: 1200, height: 630 } as const;
 
+/**
+ * Se añade como `?v=` a la URL de la imagen. Subirlo al cambiar un `.jpg` de `public/og/`:
+ * WhatsApp, Facebook y X guardan la imagen por URL y, sin esto, siguen mostrando la anterior.
+ */
+const SHARE_IMAGE_VERSION = 2;
+
 type ShareMetadataInput = {
   /** Ruta de la página, p. ej. `/growth`. Se resuelve contra `metadataBase`. */
   path: string;
@@ -32,7 +38,7 @@ export function shareMetadata({
   description,
   alt,
 }: ShareMetadataInput): Pick<Metadata, "openGraph" | "twitter" | "alternates"> {
-  const image = { url: `/og/${slug}.jpg`, ...SHARE_IMAGE_SIZE, alt };
+  const image = { url: `/og/${slug}.jpg?v=${SHARE_IMAGE_VERSION}`, ...SHARE_IMAGE_SIZE, alt };
   return {
     openGraph: {
       title,
