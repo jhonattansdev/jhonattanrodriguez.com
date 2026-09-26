@@ -34,11 +34,13 @@ export function ModernBg({ accentColor, secondaryColor, dark, className = "" }: 
           }}
         />
         
-        {/* Secondary glow - bottom corner */}
+        {/* Secondary glow - bottom corner. El alto es un % de TODA la página (en las largas es una caja muy
+            alta): `closest-side` apaga el degradé antes del borde más cercano; con el radio por defecto
+            (esquina lejana) se cortaba en seco y se veía como un rectángulo claro al costado. */}
         <div
           className="absolute -bottom-[20%] -right-[20%] w-[60%] h-[60%] rounded-full"
           style={{
-            background: `radial-gradient(circle, ${secondary}08 0%, transparent 70%)`,
+            background: `radial-gradient(circle closest-side, ${secondary}08 0%, transparent 100%)`,
           }}
         />
       </div>
