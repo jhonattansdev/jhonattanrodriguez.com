@@ -9,7 +9,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   title: "Filmmaker | Jhonattan Rodriguez",
   description:
-    "Producción de video para founders y marcas. Planes Editor, Sprint y Mensual con estrategia, producción y postproducción incluida. Desde Bogotá para LATAM.",
+    "Producción de video para founders y marcas. Planes Editor, Producción Ágil y entrenamiento CapCut Pro, con estrategia incluida. Desde Bogotá para LATAM.",
   keywords: [
     "Producción de Video",
     "Filmmaker",
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     slug: "filmmaker",
     title: "Filmmaker | Jhonattan Rodriguez",
     description:
-      "Producción de video para founders y marcas. Planes Editor, Sprint y Mensual con estrategia incluida.",
+      "Producción de video para founders y marcas. Planes Editor, Producción Ágil y entrenamiento CapCut Pro, con estrategia incluida.",
     alt: "Jhonattan Rodriguez, Filmmaker: producción de video para founders y marcas",
   }),
 };

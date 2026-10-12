@@ -2,6 +2,9 @@ import type { ReactNode } from "react";
 
 type GrowthPricePanelProps = {
   priceCop: string;
+  priceUsd: string;
+  perSessionCop: string;
+  perSessionUsd: string;
   duration: string;
   priceNote?: string;
   priceSize?: "lg" | "md";
@@ -14,6 +17,9 @@ type GrowthPricePanelProps = {
 
 export function GrowthPricePanel({
   priceCop,
+  priceUsd,
+  perSessionCop,
+  perSessionUsd,
   duration,
   priceNote,
   priceSize = "lg",
@@ -36,7 +42,17 @@ export function GrowthPricePanel({
         style={{
           fontFamily: "var(--font-quicksand), 'Quicksand', sans-serif",
           color: accent,
-          fontSize: priceSize === "lg" ? "clamp(28px, 4vw, 40px)" : "clamp(24px, 3vw, 32px)",
+          fontSize: priceSize === "lg" ? "clamp(33.6px, 4.8vw, 48px)" : "clamp(28.8px, 3.6vw, 38.4px)",
+        }}
+      >
+        {priceUsd}
+      </div>
+      <div
+        className="font-semibold mt-1"
+        style={{
+          fontFamily: "var(--font-quicksand), 'Quicksand', sans-serif",
+          color: accent,
+          fontSize: priceSize === "lg" ? "clamp(16px, 2vw, 20px)" : "clamp(15px, 1.8vw, 18px)",
         }}
       >
         {priceCop}
@@ -46,6 +62,12 @@ export function GrowthPricePanel({
         style={{ fontFamily: "var(--font-lato), 'Lato', sans-serif", color: textMuted }}
       >
         {duration}
+      </div>
+      <div
+        className="text-xs mt-1"
+        style={{ fontFamily: "var(--font-lato), 'Lato', sans-serif", color: textMuted }}
+      >
+        {perSessionUsd} ({perSessionCop}) por sesión
       </div>
       {priceNote ? (
         <div

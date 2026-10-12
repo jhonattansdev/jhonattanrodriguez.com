@@ -6,7 +6,7 @@ import { ArrowRightIcon, GlowButton } from "@/components/shared/glow-button";
 import { Reveal } from "@/components/shared/reveal";
 import { FILM_METHOD_STEPS, FILM_METHOD_VISION, FILM_PLANS } from "@/lib/design-tokens";
 
-// El framework estratégico (Valor, Ventas, Blockbuster) ya vive en el Plan Sprint: se reutiliza para no repetir copy.
+// El framework estratégico (Valor, Ventas, Blockbuster) ya vive en el plan Producción Ágil (id "sprint"): se reutiliza para no repetir copy.
 const FRAMEWORK = FILM_PLANS.find((plan) => plan.id === "sprint")?.framework ?? [];
 
 const HEADING_ID = "film-method-heading";

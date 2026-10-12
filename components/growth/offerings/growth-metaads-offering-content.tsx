@@ -16,7 +16,9 @@ export function GrowthMetaAdsOfferingContent({
   accordionTheme,
   innerExpanded,
   onInnerToggle,
-}: GrowthOfferingContentProps) {
+  /** false cuando este contenido va anidado dentro de otra oferta (plan inicial), cuyo panel de precio ya trae su propio CTA. */
+  showOwnCta = true,
+}: GrowthOfferingContentProps & { showOwnCta?: boolean }) {
   const { dark, accent, border, accentSolid, text } = pageTheme;
   const bodyStyle = {
     fontFamily: "var(--font-lato), 'Lato', sans-serif",
@@ -81,21 +83,23 @@ export function GrowthMetaAdsOfferingContent({
         {GROWTH_METAADS_RESULTADO}
       </GrowthHighlightBlock>
 
-      <div className={`mt-6 flex flex-col sm:flex-row gap-3 ${growthRowCenter}`}>
-        <CTACalendar
-          variant="primary"
-          dark={dark}
-          accentColor={accent}
-          accentSolidColor={accentSolid}
-        />
-        <CTAWhatsApp
-          variant="secondary"
-          context="growth"
-          dark={dark}
-          accentColor={accent}
-          label="Tengo preguntas"
-        />
-      </div>
+      {showOwnCta ? (
+        <div className={`mt-6 flex flex-col sm:flex-row gap-3 ${growthRowCenter}`}>
+          <CTACalendar
+            variant="primary"
+            dark={dark}
+            accentColor={accent}
+            accentSolidColor={accentSolid}
+          />
+          <CTAWhatsApp
+            variant="secondary"
+            context="growth"
+            dark={dark}
+            accentColor={accent}
+            label="Tengo preguntas"
+          />
+        </div>
+      ) : null}
     </>
   );
 }

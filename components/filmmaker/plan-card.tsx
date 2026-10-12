@@ -76,7 +76,13 @@ export function PlanCard({
 
       <div className="mb-6">
         <div
-          className="font-bold text-2xl sm:text-3xl tracking-tight"
+          className="font-bold text-3xl sm:text-4xl tracking-tight"
+          style={{ fontFamily: "var(--font-quicksand), sans-serif", color: surface.price }}
+        >
+          {plan.priceUsd}
+        </div>
+        <div
+          className="font-semibold text-base sm:text-lg mt-1"
           style={{ fontFamily: "var(--font-quicksand), sans-serif", color: surface.price }}
         >
           {plan.price}
@@ -193,6 +199,7 @@ export function PlanCard({
                       key={k}
                       stage={p.stage}
                       desc={p.desc}
+                      amountUsd={p.amountUsd}
                       amount={p.amount}
                       surface={surface}
                     />
@@ -249,11 +256,13 @@ export function PlanCard({
 function PlanDetailRow({
   stage,
   desc,
+  amountUsd,
   amount,
   surface,
 }: {
   stage: string;
   desc: string;
+  amountUsd: string;
   amount: string;
   surface: PlanSurface;
 }) {
@@ -267,7 +276,16 @@ function PlanDetailRow({
     >
       <div className="order-1 sm:order-2 w-full sm:w-auto sm:max-w-[11rem] shrink-0 text-left sm:text-right">
         <span
-          className="text-sm font-semibold leading-snug text-pretty block"
+          className="text-base font-bold leading-snug block"
+          style={{
+            fontFamily: "var(--font-quicksand), sans-serif",
+            color: surface.detailAccent,
+          }}
+        >
+          {amountUsd}
+        </span>
+        <span
+          className="text-xs font-semibold leading-snug block mt-0.5"
           style={{
             fontFamily: "var(--font-quicksand), sans-serif",
             color: surface.detailAccent,

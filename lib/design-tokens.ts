@@ -127,6 +127,7 @@ export const FILM_PLANS = [
     name: "Plan Editor",
     tagline: "Framework propio para convertir tu material grabado en contenido de alto valor, listo para publicar.",
     price: "$100.000 COP",
+    priceUsd: "$33 USD",
     featured: false,
     production: "Entrega en 3–5 días hábiles por video",
     includes: [
@@ -137,14 +138,15 @@ export const FILM_PLANS = [
     ],
     costPerPiece: "Envías tu material crudo junto con el guion o brief de tu marca; aplico mi framework de edición para convertirlo en contenido listo para publicar.",
     savings: "Incluye 1 ronda de ajustes por video.",
-    addon: "Sin mínimo de videos: pagas $100.000 COP por cada pieza que envíes a editar.",
+    addon: "Sin mínimo de videos: pagas $33 USD ($100.000 COP) por cada pieza que envíes a editar.",
   },
   {
     id: "sprint",
-    name: "Plan Sprint",
+    name: "Producción Ágil",
     tagline: "Un día. Una locación. Ocho piezas listas para publicar con equipo ágil en set.",
     price: "$1.200.000 COP",
-    featured: true,
+    priceUsd: "$375 USD",
+    featured: false,
     production: "1 día de producción (6–8 horas)",
     includes: [
       "Equipo ágil en locación: rodaje y dirección para piezas cortas en redes",
@@ -168,8 +170,8 @@ export const FILM_PLANS = [
     costPerPiece: "$150.000 COP vs. $300.000–$500.000 en producción tradicional",
     addon: "Add-on opcional: sesión fotográfica, $300.000 COP",
     payment: [
-      { stage: "Al confirmar", amount: "$600.000 COP", desc: "Asegura tu cupo; iniciamos pre-producción" },
-      { stage: "Contra entrega", amount: "$600.000 COP", desc: "Pagas al recibir tus 8 reels listos" },
+      { stage: "Al confirmar", amountUsd: "$187,50 USD", amount: "$600.000 COP", desc: "Asegura tu cupo; iniciamos pre-producción" },
+      { stage: "Contra entrega", amountUsd: "$187,50 USD", amount: "$600.000 COP", desc: "Pagas al recibir tus 8 reels listos" },
     ],
   },
   {
@@ -177,7 +179,8 @@ export const FILM_PLANS = [
     name: "Entrenamiento CapCut Pro",
     tagline: "4 sesiones 1:1 para aprender mi framework de edición en CapCut Pro y sacarle calidad profesional a tu material.",
     price: "$500.000 COP",
-    featured: false,
+    priceUsd: "$159 USD",
+    featured: true,
     production: "4 sesiones 1:1 por videollamada",
     includes: [
       "Principios básicos de edición y ritmo narrativo en CapCut Pro",
@@ -187,7 +190,7 @@ export const FILM_PLANS = [
     ],
     costPerPiece: "Nos sentamos 1:1 por videollamada a analizar tu material y tu forma de grabar, identificando el mínimo necesario para que tu producción salga con calidad profesional aplicando mi framework de edición.",
     savings: "Incluye plantilla/proyecto de CapCut para que apliques el framework en tus propias ediciones.",
-    addon: "Soporte por WhatsApp durante el entrenamiento. Sesión de refuerzo individual: $150.000 COP c/u.",
+    addon: "Soporte por WhatsApp durante el entrenamiento. Sesión de refuerzo individual: $49 USD ($150.000 COP) c/u.",
   },
 ];
 
@@ -274,8 +277,8 @@ export const GROWTH_STACK = [
   "Claude",
   "Meta Ads",
   "Obsidian",
-  "Google Workspace",
-  "Microsoft 365",
+  "Instagram",
+  "LinkedIn",
 ] as const;
 
 // ─── FILM STACK (hero) ────────────────────────────────────────────────────────
@@ -292,7 +295,7 @@ export const FILM_STACK = [
 export const BUILDER_STACK = [
   "Claude Code",
   "Cursor",
-  "Lovable/v0",
+  "Hostinger",
   "Supabase",
   "Vercel",
   "GitHub",

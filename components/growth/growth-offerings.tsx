@@ -132,7 +132,7 @@ export function GrowthOfferings({
           stagger
           role="tablist"
           aria-label="Servicios de Growth"
-          className="flex gap-3 overflow-x-auto snap-x snap-proximity -mx-6 px-6 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:mx-0 md:px-0 md:pb-0 md:overflow-visible md:snap-none md:flex-wrap md:justify-center"
+          className="flex gap-3 overflow-x-auto snap-x snap-proximity -mx-6 px-6 pt-2 -mt-2 pb-5 -mb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:mx-0 md:px-0 md:pt-0 md:mt-0 md:pb-0 md:mb-0 md:overflow-visible md:snap-none md:flex-wrap md:justify-center"
         >
           {GROWTH_OFFERING_ORDER.map((id) => (
             <GrowthOfferingTile
@@ -191,6 +191,9 @@ export function GrowthOfferings({
             <div className="w-full flex justify-center">
               <GrowthPricePanel
                 priceCop={meta.priceCop}
+                priceUsd={meta.priceUsd}
+                perSessionCop={meta.perSessionCop}
+                perSessionUsd={meta.perSessionUsd}
                 duration={meta.duration}
                 priceNote={meta.priceNote}
                 priceSize={meta.priceSize ?? "lg"}

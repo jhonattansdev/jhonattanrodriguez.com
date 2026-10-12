@@ -55,7 +55,13 @@ export function GrowthOfferingTile({
         {meta.tabTitle}
       </span>
       <span
-        className="block font-bold mt-1.5 text-base sm:text-lg leading-tight"
+        className="block font-bold mt-1.5 text-[19.2px] sm:text-[21.6px] leading-tight"
+        style={{ fontFamily: "var(--font-quicksand), 'Quicksand', sans-serif", color: accent }}
+      >
+        {meta.priceUsd}
+      </span>
+      <span
+        className="block font-semibold text-xs sm:text-sm mt-0.5"
         style={{ fontFamily: "var(--font-quicksand), 'Quicksand', sans-serif", color: accent }}
       >
         {meta.priceCop}
