@@ -89,14 +89,27 @@ export function SessionsSection({ clientId, sessions }: { clientId: string; sess
                       {session.duration_minutes ? ` · ${formatMinutes(session.duration_minutes)}` : ""}
                     </span>
                   </p>
-                  {session.comments ? <p className="text-sm mt-1">{session.comments}</p> : null}
+                  {session.comments ? <p className="text-sm mt-2 leading-relaxed">{session.comments}</p> : null}
                   {session.reto ? (
-                    <p className="text-sm mt-1" style={{ color: "var(--cm-violet-300)" }}>
-                      Reto: {session.reto}
-                    </p>
+                    <div
+                      className="mt-3 rounded-lg p-2.5"
+                      style={{
+                        background: "color-mix(in srgb, var(--cm-violet-500) 10%, transparent)",
+                        border: "1px solid var(--border)",
+                      }}
+                    >
+                      <p
+                        className="text-[10px] font-semibold uppercase tracking-wider mb-0.5"
+                        style={{ color: "var(--cm-violet-300)" }}
+                      >
+                        Reto
+                      </p>
+                      <p className="text-sm">{session.reto}</p>
+                    </div>
                   ) : null}
                 </button>
-                <form action={deleteSession.bind(null, session.id, clientId)}>
+                {/* Eliminar sesión solo desde escritorio: margen de seguridad para no borrar sin querer desde el celular. */}
+                <form action={deleteSession.bind(null, session.id, clientId)} className="hidden sm:block shrink-0">
                   <Button type="submit" variant="ghost" size="sm">
                     Eliminar
                   </Button>

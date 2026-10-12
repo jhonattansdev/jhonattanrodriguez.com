@@ -37,11 +37,12 @@ export default async function ClientProfilePage({ params }: { params: Promise<{ 
         <Link href="/admin/clientes" className="text-sm hover:underline" style={{ color: "var(--muted-foreground)" }}>
           ← Clientes
         </Link>
-        <div className="flex items-center justify-between gap-4 mt-2">
+        <div className="flex flex-col items-center text-center gap-4 mt-2 sm:flex-row sm:items-center sm:justify-between sm:text-left">
           <h1 className="text-2xl" style={{ fontFamily: "var(--font-anton), sans-serif" }}>
             {typedClient.name.toUpperCase()}
           </h1>
-          <div className="flex items-center gap-2 shrink-0">
+          {/* Copiar código / Eliminar cliente solo desde escritorio: en mobile se ocultan para no apretar el header. */}
+          <div className="hidden sm:flex items-center gap-2 shrink-0">
             <CopyCodeButton code={typedClient.client_code} />
             <DeleteClientButton
               clientId={typedClient.id}
@@ -51,13 +52,13 @@ export default async function ClientProfilePage({ params }: { params: Promise<{ 
             />
           </div>
         </div>
-        <p className="text-sm font-mono mt-1" style={{ color: "var(--muted-foreground)" }}>
+        <p className="text-sm font-mono mt-1 text-center sm:text-left" style={{ color: "var(--muted-foreground)" }}>
           {typedClient.client_code}
         </p>
       </div>
 
       <div
-        className={`${adminGlassCardClass} p-6 flex flex-nowrap justify-center gap-6 overflow-x-auto`}
+        className={`${adminGlassCardClass} p-6 flex flex-wrap sm:flex-nowrap justify-center gap-4 sm:gap-6 overflow-x-auto`}
         style={adminGlassCardStyle}
       >
         <Stat label="Total pagado" value={totalUsd.toLocaleString("es-CO", { maximumFractionDigits: 2 })} unit="USD" />

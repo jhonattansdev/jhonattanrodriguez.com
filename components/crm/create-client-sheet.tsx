@@ -12,13 +12,11 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { SubmitButton } from "@/components/admin/submit-button";
 import { CLIENT_STAGES, CLIENT_STAGE_LABELS } from "@/lib/crm-types";
 import { createClientRecord } from "@/app/admin/(protected)/clientes/actions";
-
-const nativeSelectClass =
-  "border-input h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] md:text-sm dark:bg-input/30";
 
 export function CreateClientSheet() {
   const [open, setOpen] = useState(false);
@@ -74,13 +72,18 @@ export function CreateClientSheet() {
 
           <div className="space-y-2">
             <Label htmlFor="stage">Etapa</Label>
-            <select id="stage" name="stage" defaultValue="prospecto" className={nativeSelectClass}>
-              {CLIENT_STAGES.map((stage) => (
-                <option key={stage} value={stage}>
-                  {CLIENT_STAGE_LABELS[stage]}
-                </option>
-              ))}
-            </select>
+            <Select name="stage" defaultValue="prospecto">
+              <SelectTrigger id="stage" className="w-full">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {CLIENT_STAGES.map((stage) => (
+                  <SelectItem key={stage} value={stage}>
+                    {CLIENT_STAGE_LABELS[stage]}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
 
           <div className="space-y-2">

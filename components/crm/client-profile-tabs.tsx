@@ -69,7 +69,8 @@ export function ClientProfileTabs({
                         {payment.payment_method ? ` · ${payment.payment_method}` : ""}
                       </p>
                     </div>
-                    <form action={deletePayment.bind(null, payment.id, client.id)}>
+                    {/* Eliminar pago solo desde escritorio: mismo margen de seguridad que las sesiones. */}
+                    <form action={deletePayment.bind(null, payment.id, client.id)} className="hidden sm:block shrink-0">
                       <Button type="submit" variant="ghost" size="sm">
                         Eliminar
                       </Button>

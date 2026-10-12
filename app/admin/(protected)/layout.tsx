@@ -1,5 +1,6 @@
 import { Anton, Barlow_Condensed, Inter } from "next/font/google";
 import { LogOut } from "lucide-react";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { AdminOrbField } from "@/components/admin/orb-field";
 import { Button } from "@/components/ui/button";
@@ -41,7 +42,7 @@ export default async function AdminProtectedLayout({
       <AdminOrbField />
 
       <header className="relative z-10 flex items-center justify-between gap-4 px-6 py-4 border-b" style={{ borderColor: "var(--border)" }}>
-        <div className="flex items-center gap-2.5 shrink-0">
+        <Link href="/" className="flex items-center gap-2.5 shrink-0">
           <span
             className="flex items-center justify-center w-8 h-8 rounded-full text-sm"
             style={{
@@ -57,7 +58,7 @@ export default async function AdminProtectedLayout({
           >
             CRM
           </span>
-        </div>
+        </Link>
 
         <div className="flex items-center gap-3 shrink-0">
           <span className="text-xs sm:text-sm hidden md:inline" style={{ color: "var(--muted-foreground)" }}>
