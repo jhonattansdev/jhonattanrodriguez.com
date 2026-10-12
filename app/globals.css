@@ -118,6 +118,53 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+/*
+ * Tema del panel interno (/admin, logueado), inspirado en Coach Manager de
+ * MurphyIA. Aislado en esta clase (no toca :root/.dark): confirmado que
+ * ningún otro componente del sitio consume los tokens de shadcn, así que
+ * esto no afecta ninguna otra ruta. `--radius-*` se pisa directo (no vía el
+ * --radius base) para calzar la escala angulosa real del original.
+ */
+.admin-theme {
+  --background: hsl(260 14% 4%);
+  --foreground: hsl(260 15% 96%);
+  --card: hsl(257 12% 9%);
+  --card-foreground: hsl(260 15% 96%);
+  --popover: hsl(257 12% 9%);
+  --popover-foreground: hsl(260 15% 96%);
+  --primary: hsl(258 90% 66%);
+  --primary-foreground: hsl(260 14% 4%);
+  --secondary: hsl(257 12% 14%);
+  --secondary-foreground: hsl(260 15% 96%);
+  --muted: hsl(257 12% 14%);
+  --muted-foreground: hsl(260 10% 65%);
+  --accent: hsl(257 12% 16%);
+  --accent-foreground: hsl(260 15% 96%);
+  --destructive: hsl(0 72% 51%);
+  --destructive-foreground: hsl(260 15% 96%);
+  --border: hsl(257 12% 18%);
+  --input: hsl(257 12% 18%);
+  --ring: hsl(258 90% 66%);
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+  --radius-xl: 14px;
+
+  /* Escala violeta y tonos de estado, para los componentes nuevos de admin/ (no son tokens de shadcn, se leen directo con var()). */
+  --cm-violet-300: hsl(258 90% 78%);
+  --cm-violet-400: hsl(258 90% 66%);
+  --cm-violet-500: hsl(258 80% 58%);
+  --cm-violet-600: hsl(258 70% 48%);
+  --cm-card-glass: linear-gradient(135deg, hsla(257, 12%, 14%, 0.62), hsla(258, 13%, 7%, 0.42));
+  --cm-success: hsl(142 71% 45%);
+  --cm-warning: hsl(38 92% 50%);
+  --cm-critical: hsl(0 72% 51%);
+  --cm-info: hsl(189 94% 43%);
+
+  background: var(--background);
+  color: var(--foreground);
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

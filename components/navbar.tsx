@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useTheme } from "@teispace/next-themes";
 import { THEMES } from "@/lib/design-tokens";
 import { NAV_ITEMS } from "@/lib/nav-items";
@@ -18,8 +18,23 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
   const { theme, setTheme } = useTheme();
   const { night, toggleNight } = useNight();
+  const logoClicks = useRef<number[]>([]);
+
+  // Acceso oculto al CRM: 3 clics seguidos en el logo (dentro de 1.2 s)
+  // llevan a /admin/clientes en vez de "/". El proxy redirige a /admin/login
+  // si todavía no hay sesión.
+  const handleLogoClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    const now = Date.now();
+    logoClicks.current = [...logoClicks.current, now].filter((t) => now - t < 1200);
+    if (logoClicks.current.length >= 3) {
+      event.preventDefault();
+      logoClicks.current = [];
+      router.push("/admin/clientes");
+    }
+  };
 
   const dark = theme === "dark";
 
@@ -33,6 +48,11 @@ export function Navbar() {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // El panel interno (ya logueado) tiene su propio navbar; /admin/login
+  // sigue usando este (es la puerta de entrada pública, con el logo que
+  // lleva al triple-click de arriba).
+  if (pathname?.startsWith("/admin") && pathname !== "/admin/login") return null;
 
   const isActive = (href: string) => {
     if (href === "/") return pathname === "/";
@@ -71,6 +91,7 @@ export function Navbar() {
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-center md:justify-between">
           <Link
             href="/"
+            onClick={handleLogoClick}
             className="md:relative absolute left-1/2 md:left-auto -translate-x-1/2 md:translate-x-0 z-10 shrink-0 transition-opacity duration-200 hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-current rounded-md"
             style={{
               fontFamily: "var(--font-engagement), 'Engagement', cursive",

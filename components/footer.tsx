@@ -35,6 +35,9 @@ export function Footer() {
     setMounted(true);
   }, []);
 
+  // El panel interno no lleva navegación pública ni redes del footer.
+  if (pathname?.startsWith("/admin")) return null;
+
   // Default to dark during SSR to match the initial HTML
   const dark = mounted ? theme === "dark" : true;
   const routeId = resolveRouteThemeId(pathname);
