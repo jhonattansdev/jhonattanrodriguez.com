@@ -10,6 +10,9 @@ import {
   CLIENT_STAGE_TONE,
   formatClientSinceDate,
   formatMinutes,
+  getCurrentMonthKey,
+  getCurrentMonthLabel,
+  MONTHLY_INCOME_GOAL_USD,
   type Client,
   type ClientPayment,
   type ClientSession,
@@ -24,20 +27,24 @@ export default async function ClientesPage() {
 
   const [{ data: clients }, { data: payments }, { data: sessions }] = await Promise.all([
     supabase.from("clients").select("*").order("created_at", { ascending: false }),
-    supabase.from("client_payments").select("client_id, amount_usd"),
+    supabase.from("client_payments").select("client_id, amount_usd, paid_at"),
     supabase.from("client_sessions").select("client_id, duration_minutes, session_date"),
   ]);
 
+  const monthKey = getCurrentMonthKey();
   const paymentsByClient = new Map<string, number>();
   let totalUsd = 0;
-  for (const payment of (payments ?? []) as Pick<ClientPayment, "client_id" | "amount_usd">[]) {
+  let monthlyUsd = 0;
+  for (const payment of (payments ?? []) as Pick<ClientPayment, "client_id" | "amount_usd" | "paid_at">[]) {
     totalUsd += payment.amount_usd;
     paymentsByClient.set(payment.client_id, (paymentsByClient.get(payment.client_id) ?? 0) + payment.amount_usd);
+    if (payment.paid_at.startsWith(monthKey)) monthlyUsd += payment.amount_usd;
   }
 
   const sessionsByClient = new Map<string, { count: number; minutes: number; dates: string[] }>();
   let totalSessions = 0;
   let totalSessionMinutes = 0;
+  let monthlyMinutes = 0;
   for (const session of (sessions ?? []) as Pick<ClientSession, "client_id" | "duration_minutes" | "session_date">[]) {
     const existing = sessionsByClient.get(session.client_id) ?? { count: 0, minutes: 0, dates: [] };
     existing.count += 1;
@@ -46,7 +53,11 @@ export default async function ClientesPage() {
     sessionsByClient.set(session.client_id, existing);
     totalSessions += 1;
     totalSessionMinutes += session.duration_minutes ?? 0;
+    if (session.session_date.startsWith(monthKey)) monthlyMinutes += session.duration_minutes ?? 0;
   }
+
+  const totalHours = totalSessionMinutes / 60;
+  const hourlyValueUsd = totalSessionMinutes > 0 ? totalUsd / totalHours : null;
 
   return (
     <div className="max-w-5xl mx-auto">
@@ -59,9 +70,21 @@ export default async function ClientesPage() {
 
       <div className={`${adminGlassCardClass} p-6 mb-6 flex flex-wrap justify-center gap-8`} style={adminGlassCardStyle}>
         <Stat label="Clientes" value={String(clients?.length ?? 0)} />
-        <Stat label="Total pagado" value={totalUsd.toLocaleString("es-CO", { maximumFractionDigits: 2 })} unit="USD" />
         <Stat label="Sesiones" value={String(totalSessions)} />
         <Stat label="Tiempo invertido" value={formatMinutes(totalSessionMinutes)} />
+        <Stat label="Total pagado" value={totalUsd.toLocaleString("es-CO", { maximumFractionDigits: 2 })} unit="USD" />
+        <Stat
+          label="Valor hora"
+          value={hourlyValueUsd !== null ? hourlyValueUsd.toLocaleString("es-CO", { maximumFractionDigits: 0 }) : "—"}
+          unit={hourlyValueUsd !== null ? "USD/h" : undefined}
+        />
+        <Stat label={`Tiempo ${getCurrentMonthLabel()}`} value={formatMinutes(monthlyMinutes)} />
+        <Stat
+          label={`Ingresos ${getCurrentMonthLabel()}`}
+          value={`${monthlyUsd.toLocaleString("es-CO", { maximumFractionDigits: 0 })} / ${MONTHLY_INCOME_GOAL_USD.toLocaleString("es-CO")}`}
+          unit="USD"
+          progress={monthlyUsd / MONTHLY_INCOME_GOAL_USD}
+        />
       </div>
 
       <div className={adminGlassCardClass} style={adminGlassCardStyle}>

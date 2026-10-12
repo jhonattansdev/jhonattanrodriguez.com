@@ -1,3 +1,4 @@
+import { capitalizeFirst } from "@/lib/admin-layout";
 import { FILM_PLANS } from "@/lib/design-tokens";
 import { GROWTH_OFFERINGS, GROWTH_OFFERING_ORDER } from "@/lib/growth-data";
 
@@ -21,6 +22,26 @@ export const CLIENT_STAGE_TONE: Record<ClientStage, "critical" | "warning" | "su
 
 /** COP por 1 USD, usada como default al registrar un pago en COP. */
 export const DEFAULT_COP_USD_RATE = 3200;
+
+/** Meta de ingresos mensuales en USD, para el stat de progreso del mes en la lista de clientes. */
+export const MONTHLY_INCOME_GOAL_USD = 1000;
+
+const BOGOTA_TZ = "America/Bogota";
+
+/** "2026-10" en hora de Bogotá (no la del servidor): paid_at/session_date son fechas locales sin hora ni huso. */
+export function getCurrentMonthKey(): string {
+  const parts = new Intl.DateTimeFormat("en-CA", {
+    timeZone: BOGOTA_TZ,
+    year: "numeric",
+    month: "2-digit",
+  }).formatToParts(new Date());
+  return `${parts.find((p) => p.type === "year")?.value}-${parts.find((p) => p.type === "month")?.value}`;
+}
+
+/** "Octubre", el mes actual en hora de Bogotá. */
+export function getCurrentMonthLabel(): string {
+  return capitalizeFirst(new Date().toLocaleDateString("es-CO", { month: "long", timeZone: BOGOTA_TZ }));
+}
 
 export type PaymentCurrency = "COP" | "USD";
 
